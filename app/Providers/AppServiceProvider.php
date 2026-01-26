@@ -1,0 +1,42 @@
+<?php
+
+namespace App\Providers;
+
+use Illuminate\Support\ServiceProvider;
+use Laravel\Socialite\Contracts\Factory as SocialiteFactory;
+
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
+
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        // Register Discord Socialite Provider
+        $this->bootDiscordSocialite();
+    }
+
+    /**
+     * Bootstrap Discord Socialite Provider
+     */
+    protected function bootDiscordSocialite(): void
+    {
+        $socialite = $this->app->make(SocialiteFactory::class);
+        
+        $socialite->extend('discord', function ($app) use ($socialite) {
+            $config = $app['config']['services.discord'];
+            return $socialite->buildProvider(
+                \SocialiteProviders\Discord\Provider::class,
+                $config
+            );
+        });
+    }
+}
