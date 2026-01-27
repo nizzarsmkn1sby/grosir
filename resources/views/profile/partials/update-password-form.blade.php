@@ -1,48 +1,41 @@
-<section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
-        </h2>
+<form method="post" action="{{ route('password.update') }}" class="space-y-8">
+    @csrf
+    @method('put')
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
-        </p>
-    </header>
-
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
-        @csrf
-        @method('put')
-
+    <div class="space-y-8">
+        <!-- Current Password -->
         <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+            <label for="current_password" class="terminal-label">Active Authorization Key</label>
+            <input id="current_password" name="current_password" type="password" class="terminal-input" autocomplete="current-password" placeholder="••••••••" />
+            <x-input-error class="mt-2" :messages="$errors->updatePassword->get('current_password')" />
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
-        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <!-- New Password -->
+            <div>
+                <label for="password" class="terminal-label">New Sourcing Protocol Key</label>
+                <input id="password" name="password" type="password" class="terminal-input" autocomplete="new-password" placeholder="Min. 8 characters" />
+                <x-input-error class="mt-2" :messages="$errors->updatePassword->get('password')" />
+            </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+            <!-- Confirm Password -->
+            <div>
+                <label for="password_confirmation" class="terminal-label">Confirm New Protocol</label>
+                <input id="password_confirmation" name="password_confirmation" type="password" class="terminal-input" autocomplete="new-password" placeholder="Repeat new key" />
+                <x-input-error class="mt-2" :messages="$errors->updatePassword->get('password_confirmation')" />
+            </div>
         </div>
+    </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
+    <div class="flex items-center gap-6 pt-4 border-t border-slate-50">
+        <button type="submit" class="btn-terminal-secondary">
+            <i class="fas fa-key mr-2"></i> Rotate Security Keys
+        </button>
 
-            @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
-        </div>
-    </form>
-</section>
+        @if (session('status') === 'password-updated')
+            <div class="protocol-status">
+                <i class="fas fa-lock mr-2"></i> Encryption Updated
+            </div>
+        @endif
+    </div>
+</form>

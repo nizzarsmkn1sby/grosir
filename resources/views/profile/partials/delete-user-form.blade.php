@@ -1,54 +1,51 @@
 <section class="space-y-6">
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Delete Account') }}
-        </h2>
-
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
-        </p>
-    </header>
-
-    <x-danger-button
+    <button
+        class="btn-terminal-danger"
         x-data=""
         x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >{{ __('Delete Account') }}</x-danger-button>
+    >
+        <i class="fas fa-trash-alt mr-2"></i> Wipe Account Data
+    </button>
 
     <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+        <form method="post" action="{{ route('profile.destroy') }}" class="p-10 bg-white rounded-3xl">
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-medium text-gray-900">
-                {{ __('Are you sure you want to delete your account?') }}
-            </h2>
+            <div class="flex items-center gap-4 mb-6">
+                <div class="w-12 h-12 bg-red-50 text-red-500 rounded-full flex items-center justify-center text-xl">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h2 class="text-2xl font-black text-gray-900 tracking-tight">
+                    Confirm Decommissioning?
+                </h2>
+            </div>
 
-            <p class="mt-1 text-sm text-gray-600">
-                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+            <p class="text-sm font-bold text-gray-500 leading-relaxed mb-8">
+                Once this protocol is executed, all of your sourcing records, manifest logs, and resource identification packets will be permanently wiped. This action is <span class="text-red-600">irreversible</span>.
             </p>
 
-            <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
-
-                <x-text-input
-                    id="password"
+            <div class="space-y-4">
+                <label for="password_deletion" class="terminal-label">Primary Authorization Key</label>
+                <input
+                    id="password_deletion"
                     name="password"
                     type="password"
-                    class="mt-1 block w-3/4"
-                    placeholder="{{ __('Password') }}"
+                    class="terminal-input"
+                    placeholder="Enter password to confirm"
+                    required
                 />
-
                 <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
             </div>
 
-            <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
-                    {{ __('Cancel') }}
-                </x-secondary-button>
+            <div class="mt-10 flex gap-4">
+                <button type="button" class="btn-terminal-outline flex-1" x-on:click="$dispatch('close')">
+                    Abort Deletion
+                </button>
 
-                <x-danger-button class="ms-3">
-                    {{ __('Delete Account') }}
-                </x-danger-button>
+                <button type="submit" class="btn-terminal-danger flex-1">
+                    Execute Wipe
+                </button>
             </div>
         </form>
     </x-modal>

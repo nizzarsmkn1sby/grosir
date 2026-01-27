@@ -3,256 +3,205 @@
 @section('title', 'Order Invoice - GrosirKu')
 
 @section('content')
-<div class="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50 to-purple-50 py-12">
-    <div class="max-w-4xl mx-auto px-4">
-        <!-- Header -->
-        <div class="mb-8">
-            <a href="{{ route('cart.index') }}" class="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-semibold mb-4 transition-colors">
-                <i class="fas fa-arrow-left"></i>
-                <span>Back to Cart</span>
-            </a>
-            
-            <div class="flex items-center justify-between">
-                <div>
-                    <h1 class="text-4xl font-black text-slate-900 mb-2">Order Invoice</h1>
-                    <p class="text-slate-500">Order #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</p>
-                </div>
-                
-                <!-- Payment Status Badge -->
-                @if($order->payment && $order->payment->status == 'completed')
-                    <span class="px-6 py-3 rounded-2xl text-base font-bold uppercase tracking-wider shadow-lg bg-gradient-to-r from-emerald-500 to-emerald-600 text-white flex items-center gap-2">
-                        <i class="fas fa-check-circle text-xl"></i>
-                        PAID
-                    </span>
-                @else
-                    <span class="px-6 py-3 rounded-2xl text-base font-bold uppercase tracking-wider shadow-lg bg-gradient-to-r from-rose-500 to-rose-600 text-white flex items-center gap-2">
-                        <i class="fas fa-exclamation-circle text-xl"></i>
-                        UNPAID
-                    </span>
-                @endif
+<div class="min-h-screen bg-[#f9fafb] py-16">
+    <div class="max-w-5xl mx-auto px-6">
+        <!-- Breadcrumb & Status -->
+        <div class="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+                <a href="{{ route('cart.index') }}" class="inline-flex items-center gap-2 text-sm font-black text-gray-400 uppercase tracking-widest hover:text-orange-500 transition-colors mb-6">
+                    <i class="fas fa-arrow-left text-[10px]"></i>
+                    Kembali ke Terminal
+                </a>
+                <h1 class="text-4xl font-black text-gray-900 tracking-tight">Invoice Sourcing</h1>
+                <p class="text-gray-500 font-bold mt-2">ID Transaksi: <span class="text-orange-600">#ORD-{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</span></p>
             </div>
+            
+            @if($order->payment && $order->payment->status == 'completed')
+                <div class="px-8 py-3 bg-emerald-50 text-emerald-600 rounded-full text-xs font-black uppercase tracking-[0.2em] border border-emerald-100 flex items-center gap-3">
+                    <span class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                    VERIFIED & PAID
+                </div>
+            @else
+                <div class="px-8 py-3 bg-orange-50 text-orange-600 rounded-full text-xs font-black uppercase tracking-[0.2em] border border-orange-100 flex items-center gap-3">
+                    <span class="w-2 h-2 bg-orange-500 rounded-full shadow-[0_0_10px_rgba(255,80,0,0.5)]"></span>
+                    AWAITING PAYMENT
+                </div>
+            @endif
         </div>
 
-        <!-- Main Invoice Card -->
-        <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100">
+        <!-- Main Invoice Core -->
+        <div class="bg-white rounded-[32px] shadow-2xl shadow-gray-200/50 border border-gray-100 overflow-hidden">
             
-            <!-- Invoice Header -->
-            <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-8 text-white">
-                <div class="flex justify-between items-start">
+            <!-- Invoice Header Bar -->
+            <div class="bg-[#1a1a1a] p-12 text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl -mr-32 -mt-32"></div>
+                <div class="flex justify-between items-start relative z-10">
                     <div>
-                        <h2 class="text-3xl font-black mb-2">GrosirKu</h2>
-                        <p class="text-indigo-100">Wholesale E-Commerce Platform</p>
+                        <div class="text-3xl font-black tracking-tighter text-orange-500 mb-2">GrosirKu.</div>
+                        <p class="text-gray-400 text-xs font-black uppercase tracking-widest">Premium Wholesale Terminal</p>
                     </div>
                     <div class="text-right">
-                        <p class="text-sm text-indigo-100 mb-1">Invoice Date</p>
-                        <p class="text-lg font-bold">{{ $order->created_at->format('d M Y') }}</p>
+                        <div class="text-[10px] font-black text-orange-500 uppercase tracking-[0.2em] mb-2">Tanggal Terbit</div>
+                        <div class="text-xl font-black">{{ $order->created_at->format('d M Y') }}</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Customer & Shipping Info -->
-            <div class="p-8 grid md:grid-cols-2 gap-8 border-b border-slate-100">
-                <!-- Customer Info -->
+            <!-- Client & Sourcing Matrix -->
+            <div class="p-12 grid md:grid-cols-2 gap-12 border-b border-gray-50">
                 <div>
-                    <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                        <i class="fas fa-user text-indigo-500"></i>
-                        Customer Information
+                    <h3 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
+                        <i class="fas fa-building text-orange-500"></i>
+                        Informasi Client
                     </h3>
-                    <div class="bg-slate-50 rounded-xl p-4 space-y-2">
-                        <p class="font-bold text-slate-900">{{ $order->user->name }}</p>
-                        <p class="text-slate-600 text-sm">{{ $order->user->email }}</p>
+                    <div class="space-y-1">
+                        <div class="text-lg font-black text-gray-900">{{ $order->user->name }}</div>
+                        <div class="text-gray-500 font-bold text-sm">{{ $order->user->email }}</div>
                     </div>
                 </div>
 
-                <!-- Shipping Info -->
                 @if($order->shipping)
                 <div>
-                    <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-                        <i class="fas fa-shipping-fast text-indigo-500"></i>
-                        Shipping Address
+                    <h3 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-6 flex items-center gap-3">
+                        <i class="fas fa-map-marker-alt text-orange-500"></i>
+                        Destinasi Logistik
                     </h3>
-                    <div class="bg-slate-50 rounded-xl p-4 space-y-1 text-sm">
-                        <p class="text-slate-700">{{ $order->shipping->address }}</p>
-                        <p class="text-slate-700">{{ $order->shipping->city }}, {{ $order->shipping->state }}</p>
-                        <p class="text-slate-700">{{ $order->shipping->postal_code }}</p>
+                    <div class="text-sm font-bold text-gray-600 leading-relaxed bg-gray-50 p-6 rounded-2xl border border-gray-100">
+                        {{ $order->shipping->address }}<br>
+                        {{ $order->shipping->city }}, {{ $order->shipping->state }} - {{ $order->shipping->postal_code }}
                     </div>
                 </div>
                 @endif
             </div>
 
-            <!-- Order Items -->
-            <div class="p-8">
-                <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                    <i class="fas fa-box text-indigo-500"></i>
-                    Order Items
+            <!-- Manifest Items -->
+            <div class="p-12">
+                <h3 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+                    <i class="fas fa-list-ul text-orange-500"></i>
+                    Manifest Pengadaan Barang
                 </h3>
 
-                <div class="space-y-3">
+                <div class="space-y-4">
                     @foreach($order->orderItems as $item)
-                    <div class="bg-slate-50 rounded-xl p-4 flex items-center gap-4 hover:bg-slate-100 transition-colors">
-                        <!-- Product Image -->
-                        <div class="w-16 h-16 bg-white rounded-lg overflow-hidden border border-slate-200 flex-shrink-0">
+                    <div class="flex items-center gap-6 p-6 rounded-3xl border border-gray-50 hover:border-orange-100 hover:bg-orange-50/10 transition-all duration-300">
+                        <div class="w-20 h-20 rounded-2xl bg-gray-50 border border-gray-100 flex-shrink-0 flex items-center justify-center overflow-hidden">
                             @if($item->product->image_url)
-                                <img src="{{ $item->product->image_url }}" alt="{{ $item->product->name }}" class="w-full h-full object-cover">
+                                <img src="{{ $item->product->image_url }}" class="w-full h-full object-cover">
                             @else
-                                <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-indigo-100 to-purple-100">
-                                    <i class="fas fa-image text-indigo-300 text-xl"></i>
-                                </div>
+                                <i class="fas fa-box text-2xl text-gray-200"></i>
                             @endif
                         </div>
-
-                        <!-- Product Info -->
+                        
                         <div class="flex-1">
-                            <h4 class="font-bold text-slate-900 mb-1">{{ $item->product->name }}</h4>
-                            <div class="flex items-center gap-4 text-sm text-slate-500">
-                                <span class="flex items-center gap-1">
-                                    <i class="fas fa-tag text-indigo-400"></i>
-                                    Rp {{ number_format($item->price, 0, ',', '.') }}
-                                </span>
-                                <span class="flex items-center gap-1">
-                                    <i class="fas fa-times text-slate-400"></i>
-                                    {{ $item->quantity }} pcs
-                                </span>
-                            </div>
+                            <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-1">{{ $item->product->category->name ?? 'Kategori' }}</div>
+                            <h4 class="text-lg font-black text-gray-900">{{ $item->product->name }}</h4>
+                            <div class="text-xs font-bold text-gray-400 mt-2">Unit Price: Rp {{ number_format($item->price, 0, ',', '.') }}</div>
                         </div>
 
-                        <!-- Subtotal -->
-                        <div class="text-right">
-                            <p class="text-xs text-slate-400 mb-1">Subtotal</p>
-                            <p class="text-lg font-black text-indigo-600">
-                                Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}
-                            </p>
+                        <div class="text-center px-6">
+                            <div class="text-[10px] font-black text-gray-300 uppercase mb-1">Quantity</div>
+                            <div class="text-lg font-black text-gray-900">{{ $item->quantity }} <span class="text-xs text-gray-400">Unit</span></div>
+                        </div>
+
+                        <div class="text-right pl-6 border-l border-gray-100">
+                            <div class="text-[10px] font-black text-gray-300 uppercase mb-1">Total</div>
+                            <div class="text-xl font-black text-orange-600">Rp {{ number_format($item->price * $item->quantity, 0, ',', '.') }}</div>
                         </div>
                     </div>
                     @endforeach
                 </div>
             </div>
 
-            <!-- Payment Summary -->
-            <div class="p-8 bg-slate-50 border-t border-slate-200">
-                <div class="max-w-md ml-auto space-y-3">
-                    <!-- Subtotal -->
-                    <div class="flex justify-between items-center text-slate-600">
-                        <span>Subtotal</span>
-                        <span class="font-semibold">Rp {{ number_format($order->orderItems->sum(fn($item) => $item->price * $item->quantity), 0, ',', '.') }}</span>
+            <!-- Financial Recap -->
+            <div class="px-12 py-10 bg-gray-50/50 border-t border-gray-50">
+                <div class="max-w-xs ml-auto space-y-4">
+                    <div class="flex justify-between text-xs font-bold text-gray-400 uppercase tracking-widest">
+                        <span>Subtotal Manifest</span>
+                        <span class="text-gray-900 font-black">Rp {{ number_format($order->orderItems->sum(fn($item) => $item->price * $item->quantity), 0, ',', '.') }}</span>
                     </div>
-
-                    <!-- Shipping (if applicable) -->
-                    <div class="flex justify-between items-center text-slate-600">
-                        <span>Shipping</span>
-                        <span class="font-semibold">Free</span>
+                    <div class="flex justify-between text-xs font-bold text-gray-400 uppercase tracking-widest">
+                        <span>Biaya Logistik</span>
+                        <span class="text-emerald-600 font-black">FREE SOURCING</span>
                     </div>
-
-                    <div class="border-t border-slate-300 pt-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-lg font-bold text-slate-900">Total Payment</span>
-                            <span class="text-2xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                                Rp {{ number_format($order->total_price, 0, ',', '.') }}
-                            </span>
-                        </div>
+                    <div class="pt-6 mt-6 border-t border-gray-200 flex justify-between items-end">
+                        <div class="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">Grand Total</div>
+                        <div class="text-4xl font-black text-gray-900 tracking-tighter">Rp {{ number_format($order->total_price, 0, ',', '.') }}</div>
                     </div>
                 </div>
             </div>
 
-            <!-- Payment Info -->
+            <!-- Payment Protocol -->
             @if($order->payment)
-            <div class="p-8 border-t border-slate-200">
-                <h3 class="text-sm font-bold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
-                    <i class="fas fa-credit-card text-indigo-500"></i>
-                    Payment Information
+            <div class="p-12 border-t border-gray-50 bg-white">
+                <h3 class="text-[11px] font-black text-gray-400 uppercase tracking-[0.2em] mb-8 flex items-center gap-3">
+                    <i class="fas fa-shield-check text-orange-500"></i>
+                    Protokol Pembayaran Terverifikasi
                 </h3>
-
-                <div class="bg-slate-50 rounded-xl p-4 space-y-3">
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-600">Payment Method</span>
-                        <span class="font-semibold text-slate-900">
-                            {{ $order->payment->payment_type ? ucfirst(str_replace('_', ' ', $order->payment->payment_type)) : 'Midtrans' }}
-                        </span>
+                
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-gray-50/50 p-8 rounded-3xl border border-gray-100">
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Metode Bayar</span>
+                            <span class="text-sm font-black text-gray-900">{{ $order->payment->payment_type ? ucfirst(str_replace('_', ' ', $order->payment->payment_type)) : 'Gateway Sistem' }}</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Status Kliring</span>
+                            @if($order->payment->status == 'completed')
+                                <span class="bg-emerald-500 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">TERVERIFIKASI</span>
+                            @else
+                                <span class="bg-orange-500 text-white text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest">PENDING</span>
+                            @endif
+                        </div>
                     </div>
-
-                    @if($order->payment->transaction_id)
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-600">Transaction ID</span>
-                        <span class="font-mono text-sm text-slate-900">{{ $order->payment->transaction_id }}</span>
+                    
+                    <div class="bg-gray-50/50 p-8 rounded-3xl border border-gray-100 flex flex-col justify-center">
+                        <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-2">Internal Transaction Hash</div>
+                        <div class="text-xs font-mono font-bold text-gray-600 break-all">{{ $order->payment->transaction_id ?? 'HASH_PENDING_RECORDS' }}</div>
                     </div>
-                    @endif
-
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-600">Payment Status</span>
-                        @if($order->payment->status == 'completed')
-                            <span class="px-3 py-1 rounded-lg bg-emerald-100 text-emerald-700 font-semibold text-sm">
-                                Completed
-                            </span>
-                        @else
-                            <span class="px-3 py-1 rounded-lg bg-rose-100 text-rose-700 font-semibold text-sm">
-                                {{ ucfirst($order->payment->status) }}
-                            </span>
-                        @endif
-                    </div>
-
-                    @if($order->payment->paid_at)
-                    <div class="flex justify-between items-center">
-                        <span class="text-slate-600">Paid At</span>
-                        <span class="font-semibold text-slate-900">{{ $order->payment->paid_at->format('d M Y, H:i') }}</span>
-                    </div>
-                    @endif
                 </div>
             </div>
             @endif
 
-            <!-- Action Buttons -->
-            <div class="p-8 bg-gradient-to-r from-slate-50 to-indigo-50 border-t border-slate-200">
-                <div class="flex flex-wrap gap-4 justify-center">
+            <!-- Operations -->
+            <div class="p-12 bg-white border-t border-gray-50 flex items-center justify-between gap-6">
+                <div>
                     @if($order->payment && $order->payment->status != 'completed')
-                    <!-- Pay Now Button -->
-                    <a href="{{ route('order.pay', $order->id) }}" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white rounded-xl font-bold shadow-lg hover:shadow-xl transition-all flex items-center gap-2 transform hover:scale-105">
-                        <i class="fas fa-credit-card"></i>
-                        <span>Pay Now</span>
-                    </a>
-                    
-                    <!-- Info Box -->
-                    <div class="px-6 py-4 bg-amber-50 border-2 border-amber-200 rounded-xl text-amber-700 flex items-center gap-2">
-                        <i class="fas fa-info-circle"></i>
-                        <span class="font-semibold text-sm">Payment pending - Complete payment to process order</span>
-                    </div>
+                        <div class="flex items-center gap-4">
+                            <a href="{{ route('order.pay', $order->id) }}" class="bg-orange-500 hover:bg-orange-600 text-white px-10 py-5 rounded-full font-black text-sm uppercase tracking-widest shadow-2xl shadow-orange-500/20 transition-all transform hover:-translate-y-1 active:scale-95 flex items-center gap-3">
+                                <i class="fas fa-credit-card"></i>
+                                Bayar Pesanan Sekarang
+                            </a>
+                            <div class="text-[10px] font-black text-orange-600 uppercase tracking-widest animate-pulse">Menunggu Settle Dana</div>
+                        </div>
+                    @else
+                        <div class="flex items-center gap-3 text-emerald-600">
+                            <i class="fas fa-check-double"></i>
+                            <span class="text-xs font-black uppercase tracking-widest">Transaksi Selesai & Terverifikasi</span>
+                        </div>
                     @endif
-                    
-                    <!-- Print Invoice Button -->
-                    <button onclick="window.print()" class="px-8 py-4 bg-white hover:bg-slate-50 text-slate-700 border-2 border-slate-200 rounded-xl font-bold shadow-sm hover:shadow-md transition-all flex items-center gap-2">
-                        <i class="fas fa-print"></i>
-                        <span>Print Invoice</span>
-                    </button>
                 </div>
+
+                <button onclick="window.print()" class="p-5 bg-gray-900 text-white rounded-full hover:bg-orange-600 transition-all shadow-xl hover:shadow-orange-500/20 group">
+                    <i class="fas fa-print group-hover:scale-110 transition-transform"></i>
+                </button>
             </div>
 
         </div>
 
-        <!-- Footer Note -->
-        <div class="mt-8 text-center text-sm text-slate-500">
-            <p>Thank you for shopping with GrosirKu!</p>
-            <p class="mt-1">For any questions, please contact our customer support.</p>
+        <div class="mt-12 text-center">
+            <p class="text-[10px] font-black text-gray-400 uppercase tracking-[0.3em]">Official GrosirKu Sourcing Terminal Record</p>
+            <p class="text-gray-300 text-[10px] mt-2">© 2024 Premium Wholesale Marketplace Ecosystem. All records are digitally signed.</p>
         </div>
     </div>
 </div>
 
-<!-- Print Styles -->
 <style>
     @media print {
-        body * {
-            visibility: hidden;
-        }
-        .max-w-4xl, .max-w-4xl * {
-            visibility: visible;
-        }
-        .max-w-4xl {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-        }
-        button, a[href*="checkout"] {
-            display: none !important;
-        }
+        body { background: white !important; }
+        .min-h-screen { py-0 !important; }
+        nav, footer, .mb-12 a, .operations button, .px-12 a, .p-12 button { display: none !important; }
+        .bg-white { shadow-none !important; border-none !important; }
+        .shadow-2xl { box-shadow: none !important; }
     }
 </style>
 @endsection

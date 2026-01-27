@@ -1,331 +1,287 @@
+@php
+    $categories = \App\Models\Category::all();
+@endphp
+
 <style>
-    /* Modern Navbar Styling */
-    nav {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        border: none !important;
-    }
-
-    nav .max-w-7xl {
-        max-width: 1280px;
-    }
-
-    /* Logo Styling */
-    .nav-logo {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        text-decoration: none;
-        transition: all 0.3s ease;
-    }
-
-    .nav-logo:hover {
-        transform: scale(1.05);
-    }
-
-    .nav-logo-icon {
-        background: white;
-        color: #667eea;
-        width: 40px;
-        height: 40px;
-        border-radius: 0.5rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.5rem;
-        font-weight: 700;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-logo-text {
-        color: white;
-        font-size: 1.5rem;
-        font-weight: 700;
-        letter-spacing: -0.5px;
-    }
-
-    /* Navigation Links */
-    .nav-links {
-        display: flex;
-        gap: 0.5rem;
-    }
-
-    .nav-link {
-        color: white !important;
-        padding: 0.75rem 1.25rem;
-        border-radius: 0.5rem;
-        text-decoration: none;
+    /* Premium Alibaba Style Navbar */
+    .top-nav {
+        background: #f4f4f4;
+        font-size: 0.75rem;
+        color: #666;
+        padding: 8px 0;
+        border-bottom: 1px solid #e5e5e5;
         font-weight: 500;
-        transition: all 0.3s ease;
+    }
+
+    .header-main {
+        background: white;
+        padding: 1.5rem 0;
+        border-bottom: 1px solid #e5e5e5;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .header-container {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
-        border-bottom: 3px solid transparent;
+        gap: 3rem;
+    }
+
+    .logo-alibaba {
+        font-size: 1.875rem;
+        font-weight: 900;
+        color: var(--alibaba-orange);
+        text-decoration: none !important;
+        letter-spacing: -0.05em;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+
+    .search-container {
+        flex: 1;
         position: relative;
     }
 
-    .nav-link:hover {
-        background: rgba(255, 255, 255, 0.15);
-    }
-
-    .nav-link.active {
-        background: rgba(255, 255, 255, 0.1);
-        border-bottom-color: white;
-        font-weight: 600;
-    }
-
-    /* Auth Buttons */
-    .auth-buttons {
+    .search-wrapper {
         display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .btn-login {
-        color: white;
-        padding: 0.5rem 1.25rem;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-login:hover {
-        background: rgba(255, 255, 255, 0.2);
-        border-color: white;
-    }
-
-    .btn-register {
+        border: 2px solid var(--alibaba-orange);
+        border-radius: 50px;
+        overflow: hidden;
         background: white;
-        color: #667eea;
-        padding: 0.5rem 1.5rem;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        font-weight: 600;
         transition: all 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
-    .btn-register:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    .search-wrapper:focus-within {
+        box-shadow: 0 0 15px rgba(255, 80, 0, 0.15);
     }
 
-    /* User Dropdown */
-    .user-dropdown-trigger {
-        background: rgba(255, 255, 255, 0.2);
+    .search-input {
+        flex: 1;
+        border: none;
+        padding: 0.875rem 1.5rem;
+        font-size: 1rem;
+        outline: none;
+        background: transparent;
+    }
+
+    .search-button {
+        background: var(--alibaba-orange);
         color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 0.5rem;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-        font-weight: 500;
-        transition: all 0.3s ease;
+        border: none;
+        padding: 0 2rem;
+        cursor: pointer;
+        font-weight: 800;
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 8px;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 0.1em;
     }
 
-    .user-dropdown-trigger:hover {
-        background: rgba(255, 255, 255, 0.3);
-        border-color: white;
+    .search-button:hover {
+        background: var(--alibaba-orange-hover);
     }
 
-    /* Mobile Menu Button */
-    .mobile-menu-btn {
-        color: white !important;
-        background: rgba(255, 255, 255, 0.2);
-        padding: 0.5rem;
-        border-radius: 0.5rem;
-    }
-
-    .mobile-menu-btn:hover {
-        background: rgba(255, 255, 255, 0.3);
-    }
-
-    /* Responsive Mobile Menu */
-    .mobile-nav-link {
-        color: #1f2937 !important;
-        padding: 0.75rem 1rem;
-        border-radius: 0.5rem;
-        text-decoration: none;
-        font-weight: 500;
+    .header-actions {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 2rem;
+        flex-shrink: 0;
+    }
+
+    .action-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-decoration: none !important;
+        color: #333;
+        font-size: 0.75rem;
+        font-weight: 600;
+        gap: 4px;
         transition: all 0.3s ease;
-        border-left: none !important;
+        cursor: pointer;
     }
 
-    .mobile-nav-link:hover,
-    .mobile-nav-link.active {
-        background: #f3f4f6;
-        color: #667eea !important;
+    .action-item:hover {
+        color: var(--alibaba-orange);
     }
 
-    @media (max-width: 640px) {
-        .nav-logo-text {
-            font-size: 1.25rem;
-        }
+    .action-item i {
+        font-size: 1.5rem;
+    }
+
+    .nav-categories {
+        background: white;
+        border-bottom: 1px solid #eee;
+        padding: 12px 0;
+    }
+
+    .category-nav-list {
+        display: flex;
+        gap: 2rem;
+        list-style: none;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+    }
+
+    .category-nav-list::-webkit-scrollbar {
+        display: none;
+    }
+
+    .category-nav-item {
+        color: #333;
+        text-decoration: none !important;
+        font-weight: 500;
+        font-size: 0.9375rem;
+        transition: color 0.3s;
+    }
+
+    .category-nav-item:hover {
+        color: var(--alibaba-orange);
+    }
+
+    .cart-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: var(--alibaba-orange);
+        color: white;
+        font-size: 10px;
+        padding: 2px 6px;
+        border-radius: 50px;
+        border: 2px solid white;
+        font-weight: 800;
+    }
+
+    @media (max-width: 1024px) {
+        .header-container { gap: 1.5rem; }
+        .logo-alibaba span { display: none; }
     }
 </style>
 
-<nav x-data="{ open: false }">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex items-center">
-                <!-- Logo -->
-                <a href="{{ route('home') }}" class="nav-logo">
-                    <div class="nav-logo-icon">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-                    <span class="nav-logo-text">GrosirKu</span>
-                </a>
-
-                <!-- Navigation Links (Desktop) -->
-                <div class="hidden sm:flex sm:ml-10 nav-links">
-                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                        <i class="fas fa-home"></i>
-                        <span>Home</span>
-                    </a>
-                    <a href="{{ route('products.index') }}" class="nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}">
-                        <i class="fas fa-box"></i>
-                        <span>Products</span>
-                    </a>
-                    @auth
-                    <a href="{{ route('cart.index') }}" class="nav-link {{ request()->routeIs('cart.*') ? 'active' : '' }}">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Cart</span>
-                    </a>
-                    @if(Auth::user()->role === 'admin')
-                    <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                        <i class="fas fa-tachometer-alt"></i>
-                        <span>Dashboard</span>
-                    </a>
-                    @endif
-                    @endauth
-                </div>
-            </div>
-
-            <!-- Right Side Navigation -->
-            <div class="hidden sm:flex sm:items-center">
-                @auth
-                <!-- User Dropdown -->
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="user-dropdown-trigger">
-                            <i class="fas fa-user-circle"></i>
-                            <span>{{ Auth::user()->name }}</span>
-                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                            </svg>
-                        </button>
-                    </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            <i class="fas fa-user-edit"></i> {{ __('Profile') }}
-                        </x-dropdown-link>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                <i class="fas fa-sign-out-alt"></i> {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
-                @else
-                <!-- Guest Buttons -->
-                <div class="auth-buttons">
-                    <a href="{{ route('login') }}" class="btn-login">
-                        <i class="fas fa-sign-in-alt"></i> Login
-                    </a>
-                    <a href="{{ route('register') }}" class="btn-register">
-                        <i class="fas fa-user-plus"></i> Register
-                    </a>
-                </div>
-                @endauth
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <div class="flex items-center sm:hidden">
-                <button @click="open = ! open" class="mobile-menu-btn">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
+<!-- Top Nav -->
+<div class="top-nav hidden md:block">
+    <div class="container flex justify-between">
+        <div class="flex gap-4">
+            <span>Platform Grosir Terbesar</span>
+            <a href="#" class="hover:text-orange-500">Bantuan</a>
+        </div>
+        <div class="flex gap-4">
+            <a href="#" class="hover:text-orange-500">Bahasa Indonesia</a>
+            <a href="#" class="hover:text-orange-500">IDR</a>
         </div>
     </div>
+</div>
 
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1 px-4" style="background: white;">
-            <a href="{{ route('home') }}" class="mobile-nav-link {{ request()->routeIs('home') ? 'active' : '' }}">
-                <i class="fas fa-home"></i>
-                <span>Home</span>
-            </a>
-            <a href="{{ route('products.index') }}" class="mobile-nav-link {{ request()->routeIs('products.*') ? 'active' : '' }}">
-                <i class="fas fa-box"></i>
-                <span>Products</span>
-            </a>
+<!-- Main Header -->
+<header class="header-main">
+    <div class="container header-container">
+        <!-- Logo -->
+        <a href="{{ route('home') }}" class="logo-alibaba">
+            <i class="fas fa-shopping-bag"></i>
+            <span>GrosirKu</span>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <form action="{{ route('products.index') }}" method="GET" class="search-wrapper">
+                <input type="text" name="search" placeholder="Cari ribuan produk grosir..." class="search-input" value="{{ request('search') }}">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                    <span class="hidden md:inline">Cari</span>
+                </button>
+            </form>
+        </div>
+
+        <!-- Actions -->
+        <div class="header-actions">
             @auth
-            <a href="{{ route('cart.index') }}" class="mobile-nav-link {{ request()->routeIs('cart.*') ? 'active' : '' }}">
-                <i class="fas fa-shopping-cart"></i>
-                <span>Cart</span>
-            </a>
-            @if(Auth::user()->role === 'admin')
-            <a href="{{ route('dashboard') }}" class="mobile-nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                <i class="fas fa-tachometer-alt"></i>
-                <span>Dashboard</span>
-            </a>
-            @endif
+                <div class="relative group">
+                    <div class="action-item">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Profil</span>
+                    </div>
+                    <!-- Simple Dropdown -->
+                    <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-xl py-2 hidden group-hover:block border z-[1002]">
+                        <a href="{{ route('profile.edit') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profil Saya</a>
+                        @if(Auth::user()->role === 'admin')
+                            <a href="{{ route('dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Dashboard</a>
+                        @endif
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit" class="w-full text-left block px-4 py-2 text-sm text-red-600 hover:bg-red-50">Keluar</button>
+                        </form>
+                    </div>
+                </div>
+
+                <a href="{{ route('cart.index') }}" class="action-item relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Pesanan</span>
+                    @php
+                        $cartCount = count(session('cart', []));
+                    @endphp
+                    @if($cartCount > 0)
+                        <span class="cart-badge">{{ $cartCount }}</span>
+                    @endif
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="action-item">
+                    <i class="fas fa-sign-in-alt"></i>
+                    <span>Masuk</span>
+                </a>
+                <a href="{{ route('register') }}" class="btn-terminal-primary !py-2 !px-6 !text-[11px] !mt-[-5px]">
+                    <span>Daftar</span>
+                </a>
             @endauth
         </div>
+    </div>
+</header>
 
-        @auth
-        <!-- User Options (Mobile) -->
-        <div class="pt-4 pb-1 border-t border-gray-200" style="background: white;">
-            <div class="px-4 mb-3">
-                <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+<!-- Categories Nav -->
+<nav class="nav-categories hidden lg:block">
+    <div class="container">
+        <div class="flex items-center">
+            <div class="flex items-center gap-3 font-bold flex-shrink-0 cursor-pointer hover:text-orange-600 mr-12" style="width: 180px;">
+                <i class="fas fa-bars"></i>
+                Semua Kategori
             </div>
-
-            <div class="space-y-1 px-4">
-                <a href="{{ route('profile.edit') }}" class="mobile-nav-link">
-                    <i class="fas fa-user-edit"></i>
-                    <span>Profile</span>
-                </a>
-
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="mobile-nav-link w-full text-left">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span>Log Out</span>
-                    </button>
-                </form>
+            <div class="flex-1 overflow-hidden">
+                <div class="category-nav-list" style="display: flex; gap: 2.5rem; align-items: center;">
+                    @foreach($categories as $category)
+                        <a href="{{ route('products.index', ['category' => $category->id]) }}" class="category-nav-item">
+                            {{ $category->name }}
+                        </a>
+                    @endforeach
+                </div>
             </div>
         </div>
-        @else
-        <!-- Guest Options (Mobile) -->
-        <div class="pt-4 pb-4 border-t border-gray-200" style="background: white;">
-            <div class="space-y-2 px-4">
-                <a href="{{ route('login') }}" class="mobile-nav-link">
-                    <i class="fas fa-sign-in-alt"></i>
-                    <span>Login</span>
-                </a>
-                <a href="{{ route('register') }}" class="mobile-nav-link">
-                    <i class="fas fa-user-plus"></i>
-                    <span>Register</span>
-                </a>
-            </div>
-        </div>
-        @endauth
     </div>
 </nav>
 
-
+<!-- Mobile Navigation -->
+<div class="mobile-bottom-nav">
+    <a href="{{ route('home') }}" class="mobile-nav-item {{ request()->routeIs('home') ? 'active' : '' }}">
+        <i class="fas fa-home"></i>
+        <span>Home</span>
+    </a>
+    <a href="{{ route('products.index') }}" class="mobile-nav-item {{ request()->routeIs('products.*') ? 'active' : '' }}">
+        <i class="fas fa-th-large"></i>
+        <span>Kategori</span>
+    </a>
+    <a href="{{ route('cart.index') }}" class="mobile-nav-item {{ request()->routeIs('cart.*') ? 'active' : '' }}">
+        <i class="fas fa-shopping-cart"></i>
+        <span>Pesanan</span>
+    </a>
+    <a href="{{ route('profile.edit') }}" class="mobile-nav-item {{ request()->routeIs('profile.*') ? 'active' : '' }}">
+        <i class="fas fa-user"></i>
+        <span>Akun</span>
+    </a>
+</div>

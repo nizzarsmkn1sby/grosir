@@ -1,134 +1,159 @@
 <x-guest-layout>
     <style>
+        :root {
+            --alibaba-orange: #FF5000;
+            --alibaba-orange-hover: #E64500;
+        }
+
         .register-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 2rem 1rem;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 80, 0, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 80, 0, 0.1) 0px, transparent 50%);
+            padding: 2rem 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .register-card {
+        .register-card-premium {
             background: white;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 4rem;
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .register-header {
+        .register-card-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--alibaba-orange), #ff8c00);
+        }
+
+        .register-header-premium {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3.5rem;
         }
 
-        .register-logo {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            width: 80px;
-            height: 80px;
-            border-radius: 1rem;
+        .auth-logo-premium {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--alibaba-orange);
+            letter-spacing: -0.05em;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .register-title-premium {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .register-subtitle-premium {
+            color: #6b7280;
+            font-size: 0.9375rem;
+            font-weight: 500;
+        }
+
+        .form-label-premium {
+            display: block;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .form-input-premium {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #f9fafb;
+            font-weight: 500;
+        }
+
+        .form-input-premium:focus {
+            outline: none;
+            border-color: var(--alibaba-orange);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 80, 0, 0.08);
+        }
+
+        .btn-auth-premium {
+            width: 100%;
+            background: var(--alibaba-orange);
+            color: white;
+            padding: 1.125rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(255, 80, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            gap: 12px;
         }
 
-        .register-logo i {
-            font-size: 2.5rem;
-            color: white;
+        .btn-auth-premium:hover {
+            transform: translateY(-3px);
+            background: var(--alibaba-orange-hover);
+            box-shadow: 0 15px 30px rgba(255, 80, 0, 0.3);
         }
 
-        .register-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .register-subtitle {
-            color: #6b7280;
-            font-size: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem;
-            border: none;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 1.5rem;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .divider {
+        .divider-premium {
             display: flex;
             align-items: center;
-            margin: 2rem 0;
+            margin: 2.5rem 0;
             color: #9ca3af;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
-        .divider::before,
-        .divider::after {
+        .divider-premium::before,
+        .divider-premium::after {
             content: '';
             flex: 1;
             height: 1px;
-            background: #e5e7eb;
+            background: #f3f4f6;
         }
 
-        .divider span {
-            padding: 0 1rem;
+        .divider-premium span {
+            padding: 0 1.25rem;
         }
 
-        .social-login {
+        .social-grid-premium {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
         }
 
-        .social-btn {
+        .social-tab-premium {
             padding: 0.875rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.75rem;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
             background: white;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -136,70 +161,49 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            color: #6b7280;
+            color: #374151;
+            font-size: 1.25rem;
         }
 
-        .social-btn:hover {
-            border-color: #667eea;
-            background: #f9fafb;
+        .social-tab-premium:hover {
+            border-color: var(--alibaba-orange);
+            color: var(--alibaba-orange);
+            background: #fff7f2;
             transform: translateY(-2px);
         }
 
-        .social-btn i {
-            font-size: 1.5rem;
-        }
-
-        .social-btn.google:hover {
-            border-color: #ea4335;
-            color: #ea4335;
-        }
-
-        .social-btn.discord:hover {
-            border-color: #5865f2;
-            color: #5865f2;
-        }
-
-        .social-btn.github:hover {
-            border-color: #333;
-            color: #333;
-        }
-
-        .login-link {
+        .footer-auth-premium {
             text-align: center;
             color: #6b7280;
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
         }
 
-        .login-link a {
-            color: #667eea;
-            font-weight: 600;
+        .footer-auth-premium a {
+            color: var(--alibaba-orange);
+            font-weight: 800;
             text-decoration: none;
+            margin-left: 0.25rem;
         }
 
-        .login-link a:hover {
+        .footer-auth-premium a:hover {
             text-decoration: underline;
         }
 
         @media (max-width: 640px) {
-            .register-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .register-title {
-                font-size: 1.5rem;
+            .register-card-premium {
+                padding: 3rem 1.5rem;
             }
         }
     </style>
 
     <div class="register-container">
-        <div class="register-card">
+        <div class="register-card-premium">
             <!-- Header -->
-            <div class="register-header">
-                <div class="register-logo">
-                    <i class="fas fa-user-plus"></i>
-                </div>
-                <h1 class="register-title">Create Account</h1>
-                <p class="register-subtitle">Join us and start shopping!</p>
+            <div class="register-header-premium">
+                <div class="auth-logo-premium">GrosirKu.</div>
+                <h1 class="register-title-premium">Buat Akun Baru</h1>
+                <p class="register-subtitle-premium">Mulai sourcing produk berkualitas hari ini</p>
             </div>
 
             <!-- Register Form -->
@@ -207,101 +211,89 @@
                 @csrf
 
                 <!-- Name -->
-                <div class="form-group">
-                    <label for="name" class="form-label">
-                        <i class="fas fa-user"></i> Full Name
-                    </label>
+                <div class="mb-6">
+                    <label for="name" class="form-label-premium">Nama Lengkap Sesuai KTP</label>
                     <input id="name" 
-                           class="form-input" 
+                           class="form-input-premium" 
                            type="text" 
                            name="name" 
                            value="{{ old('name') }}" 
                            required 
                            autofocus 
                            autocomplete="name"
-                           placeholder="Enter your full name">
+                           placeholder="Contoh: Budi Santoso">
                     <x-input-error :messages="$errors->get('name')" class="mt-2" />
                 </div>
 
                 <!-- Email -->
-                <div class="form-group">
-                    <label for="email" class="form-label">
-                        <i class="fas fa-envelope"></i> Email Address
-                    </label>
+                <div class="mb-6">
+                    <label for="email" class="form-label-premium">Alamat Email Bisnis</label>
                     <input id="email" 
-                           class="form-input" 
+                           class="form-input-premium" 
                            type="email" 
                            name="email" 
                            value="{{ old('email') }}" 
                            required 
                            autocomplete="username"
-                           placeholder="your@email.com">
+                           placeholder="nama@perusahaan.com">
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
-                <!-- Password -->
-                <div class="form-group">
-                    <label for="password" class="form-label">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
-                    <input id="password" 
-                           class="form-input" 
-                           type="password" 
-                           name="password" 
-                           required 
-                           autocomplete="new-password"
-                           placeholder="Create a strong password">
-                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                </div>
+                <!-- Password Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <div>
+                        <label for="password" class="form-label-premium">Kata Sandi</label>
+                        <input id="password" 
+                               class="form-input-premium" 
+                               type="password" 
+                               name="password" 
+                               required 
+                               autocomplete="new-password"
+                               placeholder="Min. 8 karakter">
+                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                    </div>
 
-                <!-- Confirm Password -->
-                <div class="form-group">
-                    <label for="password_confirmation" class="form-label">
-                        <i class="fas fa-lock"></i> Confirm Password
-                    </label>
-                    <input id="password_confirmation" 
-                           class="form-input" 
-                           type="password" 
-                           name="password_confirmation" 
-                           required 
-                           autocomplete="new-password"
-                           placeholder="Confirm your password">
-                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    <div>
+                        <label for="password_confirmation" class="form-label-premium">Konfirmasi</label>
+                        <input id="password_confirmation" 
+                               class="form-input-premium" 
+                               type="password" 
+                               name="password_confirmation" 
+                               required 
+                               autocomplete="new-password"
+                               placeholder="Ulangi sandi">
+                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                    </div>
                 </div>
 
                 <!-- Register Button -->
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-user-plus"></i> Create Account
+                <button type="submit" class="btn-auth-premium">
+                    <i class="fas fa-user-plus"></i> Daftar Sekarang
                 </button>
             </form>
 
             <!-- Divider -->
-            <div class="divider">
-                <span>Or sign up with</span>
+            <div class="divider-premium">
+                <span>Atau Daftar Melalui</span>
             </div>
 
-            <!-- Social Login Buttons -->
-            <div class="social-login">
-                <!-- Google -->
-                <a href="{{ route('social.redirect', 'google') }}" class="social-btn google" title="Sign up with Google">
-                    <i class="fab fa-google"></i>
+            <!-- Social Login Grid -->
+            <div class="social-grid-premium">
+                <a href="{{ route('social.redirect', 'google') }}" class="social-tab-premium" title="Google">
+                    <i class="fab fa-google text-[#ea4335]"></i>
                 </a>
-
-                <!-- Discord -->
-                <a href="{{ route('social.redirect', 'discord') }}" class="social-btn discord" title="Sign up with Discord">
-                    <i class="fab fa-discord"></i>
+                <a href="{{ route('social.redirect', 'discord') }}" class="social-tab-premium" title="Discord">
+                    <i class="fab fa-discord text-[#5865f2]"></i>
                 </a>
-
-                <!-- GitHub -->
-                <a href="{{ route('social.redirect', 'github') }}" class="social-btn github" title="Sign up with GitHub">
-                    <i class="fab fa-github"></i>
+                <a href="{{ route('social.redirect', 'github') }}" class="social-tab-premium" title="GitHub">
+                    <i class="fab fa-github text-[#181717]"></i>
                 </a>
             </div>
 
             <!-- Login Link -->
-            <div class="login-link">
-                Already have an account? 
-                <a href="{{ route('login') }}">Login here</a>
+            <div class="footer-auth-premium">
+                Sudah memiliki akun? 
+                <a href="{{ route('login') }}">Masuk Ke Terminal</a>
             </div>
         </div>
     </div>

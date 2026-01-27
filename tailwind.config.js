@@ -12,7 +12,16 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Plus Jakarta Sans', 'Inter', ...defaultTheme.fontFamily.sans],
+            },
+            colors: {
+                alibaba: {
+                    orange: '#FF5000',
+                    'orange-hover': '#e64800',
+                    black: '#1a1a1a',
+                    gray: '#F7F8FA',
+                    dark: '#222222',
+                },
             },
         },
     },

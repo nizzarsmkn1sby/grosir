@@ -1,465 +1,359 @@
 @extends('layouts.public')
 
-@section('title', 'Beranda - GrosirKu | Belanja Grosir Online Terpercaya')
+@section('title', 'Terminal Sourcing - GrosirKu Digital Ecosystem')
 
 @push('styles')
 <style>
-    /* Hero Section */
-    .hero {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 4rem 0;
-        border-radius: 1.5rem;
-        margin-bottom: 3rem;
+    /* Home Terminal Premium Styles */
+    .alibaba-hero {
+        display: grid;
+        grid-template-columns: 320px 1fr;
+        gap: 32px;
+        margin-top: 40px;
+        height: 520px;
+    }
+
+    .hero-sidebar {
+        background: white;
+        border-radius: 24px;
+        padding: 2rem 0;
+        box-shadow: var(--shadow-premium);
+        border: 1px solid #f1f5f9;
+        display: none;
+    }
+
+    @media (min-width: 1024px) {
+        .hero-sidebar {
+            display: block;
+        }
+    }
+
+    .hero-sidebar-item {
+        padding: 1rem 2.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        color: #475569;
+        text-decoration: none !important;
+        font-size: 0.9375rem;
+        font-weight: 700;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .hero-sidebar-item:hover {
+        background: #fff7f2;
+        color: var(--alibaba-orange);
+        padding-left: 3rem;
+    }
+
+    .hero-banner {
+        background: #0f172a;
+        background-image: 
+            radial-gradient(at 0% 0%, rgba(255, 80, 0, 0.1) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, rgba(255, 80, 0, 0.05) 0px, transparent 50%);
+        border-radius: 32px;
         position: relative;
         overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding: 0 6rem;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.2);
     }
 
-    .hero::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 50%;
-        height: 100%;
-        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,138.7C960,139,1056,117,1152,101.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat;
-        background-size: cover;
-        opacity: 0.3;
+    .hero-banner-content {
+        max-width: 650px;
+        z-index: 2;
     }
 
-    .hero-content {
-        position: relative;
-        z-index: 1;
-    }
-
-    .hero h1 {
-        font-size: 3rem;
-        font-weight: 800;
-        margin-bottom: 1rem;
-        line-height: 1.2;
-    }
-
-    .hero p {
-        font-size: 1.25rem;
-        margin-bottom: 2rem;
-        opacity: 0.95;
-    }
-
-    .hero-btn {
-        background: white;
-        color: #667eea;
-        padding: 1rem 2.5rem;
-        border-radius: 50px;
-        text-decoration: none;
-        font-weight: 600;
+    .hero-label {
         display: inline-flex;
         align-items: center;
-        gap: 0.5rem;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-    }
-
-    .hero-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    }
-
-    /* Categories Grid */
-    .categories-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-    }
-
-    .category-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 1rem;
-        text-align: center;
-        text-decoration: none;
-        color: var(--dark);
-        transition: all 0.3s ease;
-        box-shadow: var(--shadow);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .category-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-        background: linear-gradient(90deg, var(--primary), var(--secondary));
-        transform: scaleX(0);
-        transition: transform 0.3s ease;
-    }
-
-    .category-card:hover::before {
-        transform: scaleX(1);
-    }
-
-    .category-card:hover {
-        transform: translateY(-8px);
-        box-shadow: var(--shadow-lg);
-    }
-
-    .category-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .category-card h3 {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-    }
-
-    .category-card p {
-        color: var(--gray);
-        font-size: 0.875rem;
-    }
-
-    /* Section Title */
-    .section-title {
-        font-size: 2rem;
-        font-weight: 700;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(255, 80, 0, 0.1);
+        border: 1px solid rgba(255, 80, 0, 0.2);
+        border-radius: 100px;
+        color: var(--alibaba-orange);
+        font-size: 0.75rem;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
         margin-bottom: 2rem;
-        display: flex;
+    }
+
+    .hero-banner-content h1 {
+        font-size: 4.5rem;
+        font-weight: 900;
+        color: white;
+        margin-bottom: 2rem;
+        line-height: 1;
+        letter-spacing: -0.04em;
+    }
+
+    .hero-banner-content p {
+        font-size: 1.25rem;
+        color: #94a3b8;
+        margin-bottom: 3.5rem;
+        font-weight: 600;
+    }
+
+    .hero-banner-btn {
+        background: var(--alibaba-orange);
+        color: white;
+        padding: 1.25rem 4rem;
+        border-radius: 100px;
+        text-decoration: none !important;
+        font-weight: 900;
+        display: inline-flex;
         align-items: center;
-        gap: 1rem;
+        gap: 12px;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 15px 30px rgba(255, 80, 0, 0.25);
+        font-size: 1.125rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
     }
 
-    .section-title::after {
-        content: '';
-        flex: 1;
-        height: 3px;
-        background: linear-gradient(90deg, var(--primary), transparent);
-    }
-
-    /* Products Grid */
-    .products-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 3rem;
-    }
-
-    .product-card {
-        background: white;
-        border-radius: 1rem;
-        overflow: hidden;
-        box-shadow: var(--shadow);
-        transition: all 0.3s ease;
-        text-decoration: none;
-        color: var(--dark);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .product-card:hover {
+    .hero-banner-btn:hover {
         transform: translateY(-8px);
-        box-shadow: var(--shadow-lg);
+        box-shadow: 0 20px 40px rgba(255, 80, 0, 0.35);
+        background: #ff6a00;
     }
 
-    .product-image {
-        width: 100%;
-        height: 250px;
-        background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    /* Category Matrices */
+    .alibaba-cat-card-premium {
+        background: white;
+        padding: 3rem 2rem;
+        border-radius: 24px;
+        text-align: center;
+        text-decoration: none !important;
+        color: #1e293b;
+        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        border: 1px solid #f1f5f9;
+    }
+
+    .alibaba-cat-card-premium:hover {
+        border-color: var(--alibaba-orange);
+        transform: translateY(-12px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .cat-icon-wrapper {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 2rem;
+        background: #f8fafc;
+        border-radius: 24px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 4rem;
-        color: var(--gray);
-        position: relative;
-        overflow: hidden;
+        font-size: 2rem;
+        color: #1e293b;
+        transition: all 0.4s ease;
     }
 
-    .product-badge {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background: var(--accent);
+    .alibaba-cat-card-premium:hover .cat-icon-wrapper {
+        background: var(--alibaba-orange);
         color: white;
-        padding: 0.5rem 1rem;
-        border-radius: 50px;
-        font-size: 0.75rem;
-        font-weight: 600;
+        transform: rotate(-5deg);
     }
 
-    .product-info {
-        padding: 1.5rem;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
+    /* Trust Terminal */
+    .trust-terminal {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin: 6rem 0;
+        background: #0f172a;
+        padding: 4rem;
+        border-radius: 40px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
     }
 
-    .product-category {
-        color: var(--primary);
-        font-size: 0.875rem;
-        font-weight: 600;
-        margin-bottom: 0.5rem;
-    }
-
-    .product-name {
-        font-size: 1.125rem;
-        font-weight: 600;
-        margin-bottom: 0.75rem;
-        line-height: 1.4;
-    }
-
-    .product-price {
-        font-size: 1.5rem;
-        font-weight: 700;
-        color: var(--primary);
-        margin-bottom: 1rem;
-    }
-
-    .product-stock {
-        color: var(--secondary);
-        font-size: 0.875rem;
-        margin-bottom: 1rem;
+    .trust-item {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 24px;
     }
 
-    .product-btn {
-        background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-        color: white;
-        padding: 0.875rem;
-        border-radius: 0.5rem;
-        text-align: center;
-        font-weight: 600;
-        transition: all 0.3s ease;
-        border: none;
-        cursor: pointer;
-        margin-top: auto;
-    }
-
-    .product-btn:hover {
-        transform: scale(1.02);
-        box-shadow: 0 8px 20px rgba(37, 99, 235, 0.3);
-    }
-
-    /* Features Section */
-    .features {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 2rem;
-        margin: 4rem 0;
-        padding: 3rem 0;
-        background: white;
-        border-radius: 1.5rem;
-        box-shadow: var(--shadow);
-    }
-
-    .feature {
-        text-align: center;
-        padding: 2rem;
-    }
-
-    .feature-icon {
-        font-size: 3rem;
-        margin-bottom: 1rem;
-        background: linear-gradient(135deg, var(--primary), var(--secondary));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .feature h3 {
+    .trust-icon {
+        width: 56px;
+        height: 56px;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--alibaba-orange);
         font-size: 1.25rem;
-        margin-bottom: 0.5rem;
     }
 
-    .feature p {
-        color: var(--gray);
+    .trust-content h4 {
+        color: white;
+        font-weight: 800;
+        font-size: 0.9375rem;
+        margin-bottom: 4px;
     }
 
-    @media (max-width: 768px) {
-        .hero h1 {
-            font-size: 2rem;
-        }
+    .trust-content p {
+        color: #64748b;
+        font-size: 0.75rem;
+        font-weight: 700;
+    }
 
-        .hero p {
-            font-size: 1rem;
-        }
+    /* Product Matrix Overrides */
+    .alibaba-prod-card {
+        border-radius: 28px !important;
+        background: white !important;
+        padding: 12px;
+    }
 
-        .products-grid {
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 1rem;
-        }
+    .prod-img-wrapper {
+        border-radius: 20px !important;
+    }
 
-        .product-image {
-            height: 180px;
-        }
+    .prod-price {
+        color: #0f172a !important;
+        font-size: 1.375rem !important;
+    }
+
+    .prod-action {
+        border-radius: 100px !important;
+        font-size: 0.75rem !important;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        padding: 1rem !important;
+        background: #f8fafc !important;
+        border: none !important;
+    }
+
+    @media (max-width: 1024px) {
+        .alibaba-hero { grid-template-columns: 1fr; height: auto; }
+        .hero-banner { padding: 5rem 3rem; }
+        .hero-banner-content h1 { font-size: 3rem; }
     }
 </style>
 @endpush
 
 @section('content')
-<!-- Payment Status Alerts -->
-@if(request()->get('status') == 'success')
-<div class="alert alert-success mt-4">
-    <i class="fas fa-check-circle"></i>
-    Pembayaran berhasil! Pesanan Anda sedang kami proses.
-</div>
-@elseif(request()->get('status') == 'pending')
-<div class="alert alert-info mt-4">
-    <i class="fas fa-clock"></i>
-    Pembayaran tertunda. Silakan selesaikan pembayaran Anda.
-</div>
-@elseif(request()->get('status') == 'error')
-<div class="alert alert-error mt-4">
-    <i class="fas fa-times-circle"></i>
-    Terjadi kesalahan pada pembayaran. Silakan coba lagi.
-</div>
-@endif
-
-<!-- Hero Section -->
-<div class="hero">
-    <div class="hero-content">
-        <h1>🛒 Belanja Grosir Jadi Lebih Mudah!</h1>
-        <p>Dapatkan harga terbaik untuk kebutuhan usaha dan rumah tangga Anda. Gratis ongkir untuk pembelian di atas Rp 500.000</p>
-        <a href="{{ route('products.index') }}" class="hero-btn">
-            <i class="fas fa-shopping-bag"></i>
-            Mulai Belanja Sekarang
+<!-- Sourcing Terminal Hero -->
+<div class="alibaba-hero">
+    <div class="hero-sidebar">
+        @foreach($categories->take(8) as $category)
+        <a href="{{ route('products.index', ['category' => $category->id]) }}" class="hero-sidebar-item">
+            <span>{{ $category->name }}</span>
+            <i class="fas fa-arrow-right text-[10px] opacity-20"></i>
         </a>
+        @endforeach
+        <div class="mt-8 px-10">
+            <a href="{{ route('products.index') }}" class="text-[10px] font-black text-orange-600 uppercase tracking-widest hover:underline">Semua Protokol Sourcing</a>
+        </div>
+    </div>
+    
+    <div class="hero-banner">
+        <div class="hero-banner-content">
+            <div class="hero-label">
+                <span class="w-1.5 h-1.5 bg-orange-500 rounded-full animate-pulse"></span>
+                Official Wholesale Terminal v.1.0
+            </div>
+            <h1>Bangun Ekosistem <br><span class="text-orange-500">Bisnis Global.</span></h1>
+            <p>Akses ribuan manufaktur tangan pertama dengan jaminan keamanan transaksi terintegrasi.</p>
+            <a href="{{ route('products.index') }}" class="hero-banner-btn">
+                Mulai Pengadaan Barang
+                <i class="fas fa-chevron-right text-sm"></i>
+            </a>
+        </div>
+        <div class="hidden xl:block ml-auto">
+            <img src="https://img.alicdn.com/imgextra/i4/O1CN01P9S6f71WzY6z6f9r6_!!6000000002875-2-tps-600-600.png" alt="Terminal" class="w-[450px] opacity-40 grayscale brightness-150">
+        </div>
     </div>
 </div>
 
-<!-- Categories Section -->
-<h2 class="section-title">
-    <i class="fas fa-th-large"></i>
-    Kategori Populer
-</h2>
+<!-- Category Matrix Section -->
+<div class="alibaba-section-title">
+    <span class="text-2xl font-black">Matrix Kategori</span>
+    <a href="{{ route('products.index') }}" class="more-link font-bold uppercase tracking-widest border-b-2 border-orange-500 pb-1">Master Protokol</a>
+</div>
 
-<div class="categories-grid">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8">
     @foreach($categories as $category)
-    <a href="{{ route('products.index', ['category' => $category->id]) }}" class="category-card">
-        <div class="category-icon">
+    <a href="{{ route('products.index', ['category' => $category->id]) }}" class="alibaba-cat-card-premium">
+        <div class="cat-icon-wrapper">
             @if($category->name == 'Elektronik')
-                <i class="fas fa-laptop"></i>
+                <i class="fas fa-microchip"></i>
             @elseif($category->name == 'Fashion')
-                <i class="fas fa-tshirt"></i>
+                <i class="fas fa-gem"></i>
             @elseif($category->name == 'Makanan & Minuman')
-                <i class="fas fa-utensils"></i>
-            @elseif($category->name == 'Peralatan Rumah Tangga')
-                <i class="fas fa-home"></i>
+                <i class="fas fa-box-open"></i>
             @else
-                <i class="fas fa-box"></i>
+                <i class="fas fa-cubes"></i>
             @endif
         </div>
-        <h3>{{ $category->name }}</h3>
-        <p>{{ $category->children->count() }} Sub-kategori</p>
+        <h3 class="font-black text-sm uppercase tracking-wider">{{ $category->name }}</h3>
     </a>
     @endforeach
 </div>
 
-<!-- Featured Products -->
-<h2 class="section-title">
-    <i class="fas fa-star"></i>
-    Produk Unggulan
-</h2>
+<!-- Trust Terminal Hub -->
+<div class="trust-terminal">
+    <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-shield-check"></i></div>
+        <div class="trust-content">
+            <h4>Trade Protocol</h4>
+            <p>Keamanan dana terjamin sistem.</p>
+        </div>
+    </div>
+    <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-building"></i></div>
+        <div class="trust-content">
+            <h4>Factory Sourcing</h4>
+            <p>Langsung dari jalur manufaktur.</p>
+        </div>
+    </div>
+    <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-truck-container"></i></div>
+        <div class="trust-content">
+            <h4>Global Logistics</h4>
+            <p>Jaringan distribusi tanpa batas.</p>
+        </div>
+    </div>
+    <div class="trust-item">
+        <div class="trust-icon"><i class="fas fa-headphones-alt"></i></div>
+        <div class="trust-content">
+            <h4>Specialist Support</h4>
+            <p>Pendampingan bisnis 24/7.</p>
+        </div>
+    </div>
+</div>
 
-<div class="products-grid">
+<!-- Featured Manifest -->
+<div class="alibaba-section-title">
+    <span class="text-2xl font-black">Manifest Unggulan</span>
+    <a href="{{ route('products.index') }}" class="more-link font-bold">Log Lengkap <i class="fas fa-arrow-right ml-2 text-[10px]"></i></a>
+</div>
+
+<div class="alibaba-products mb-24">
     @foreach($featuredProducts as $product)
-    <div class="product-card">
-        <div class="product-image">
-            @if($product->image_url)
-                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
-            @else
-                <i class="fas fa-box-open"></i>
-            @endif
-            @if($product->stock_qty < 10)
-                <span class="product-badge">Stok Terbatas!</span>
-            @endif
-        </div>
-        <div class="product-info">
-            <div class="product-category">
-                <i class="fas fa-tag"></i> {{ $product->category->name }}
+    <div class="alibaba-prod-card shadow-sm hover:shadow-xl transition-all">
+        <a href="{{ route('products.show', $product->id) }}">
+            <div class="prod-img-wrapper">
+                @if($product->image_url)
+                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}">
+                @else
+                    <i class="fas fa-industry text-4xl opacity-10"></i>
+                @endif
             </div>
-            <h3 class="product-name">{{ $product->name }}</h3>
-            <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
-            <div class="product-stock">
-                <i class="fas fa-check-circle"></i>
-                Stok: {{ $product->stock_qty }} unit
-            </div>
-            <a href="{{ route('products.show', $product->id) }}" class="product-btn">
-                <i class="fas fa-eye"></i> Lihat Detail
+        </a>
+        <div class="prod-content">
+            <a href="{{ route('products.show', $product->id) }}" class="no-underline text-inherit">
+                <div class="text-[10px] font-black text-orange-500 uppercase tracking-widest mb-2">{{ $product->category->name }}</div>
+                <h3 class="prod-name font-black">{{ $product->name }}</h3>
+                <div class="prod-price font-black mt-4">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
+                <div class="prod-moq mt-2 font-bold opacity-40">Standard Unit Pricing</div>
             </a>
-        </div>
-    </div>
-    @endforeach
-</div>
-
-<!-- Features Section -->
-<div class="features">
-    <div class="feature">
-        <div class="feature-icon">
-            <i class="fas fa-shipping-fast"></i>
-        </div>
-        <h3>Pengiriman Cepat</h3>
-        <p>Gratis ongkir untuk pembelian di atas Rp 500.000</p>
-    </div>
-    <div class="feature">
-        <div class="feature-icon">
-            <i class="fas fa-shield-alt"></i>
-        </div>
-        <h3>Pembayaran Aman</h3>
-        <p>Transaksi dijamin aman dengan sistem enkripsi</p>
-    </div>
-    <div class="feature">
-        <div class="feature-icon">
-            <i class="fas fa-headset"></i>
-        </div>
-        <h3>Layanan 24/7</h3>
-        <p>Customer service siap membantu Anda kapan saja</p>
-    </div>
-    <div class="feature">
-        <div class="feature-icon">
-            <i class="fas fa-tags"></i>
-        </div>
-        <h3>Harga Grosir</h3>
-        <p>Dapatkan harga terbaik untuk pembelian dalam jumlah banyak</p>
-    </div>
-</div>
-
-<!-- New Arrivals -->
-<h2 class="section-title">
-    <i class="fas fa-fire"></i>
-    Produk Terbaru
-</h2>
-
-<div class="products-grid">
-    @foreach($newArrivals as $product)
-    <div class="product-card">
-        <div class="product-image">
-            @if($product->image_url)
-                <img src="{{ $product->image_url }}" alt="{{ $product->name }}" style="width: 100%; height: 100%; object-fit: cover;">
-            @else
-                <i class="fas fa-box-open"></i>
-            @endif
-            <span class="product-badge" style="background: var(--secondary);">Baru!</span>
-        </div>
-        <div class="product-info">
-            <div class="product-category">
-                <i class="fas fa-tag"></i> {{ $product->category->name }}
-            </div>
-            <h3 class="product-name">{{ $product->name }}</h3>
-            <div class="product-price">Rp {{ number_format($product->price, 0, ',', '.') }}</div>
-            <div class="product-stock">
-                <i class="fas fa-check-circle"></i>
-                Stok: {{ $product->stock_qty }} unit
-            </div>
-            <a href="{{ route('products.show', $product->id) }}" class="product-btn">
-                <i class="fas fa-eye"></i> Lihat Detail
+            <a href="{{ route('products.show', $product->id) }}" class="btn-terminal-primary w-full mt-6">
+                Buka Terminal Produk
             </a>
         </div>
     </div>

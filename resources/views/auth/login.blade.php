@@ -1,168 +1,175 @@
 <x-guest-layout>
     <style>
+        :root {
+            --alibaba-orange: #FF5000;
+            --alibaba-orange-hover: #E64500;
+        }
+
         .login-container {
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 2rem 1rem;
+            background-color: #0f172a;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(255, 80, 0, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 80, 0, 0.1) 0px, transparent 50%);
+            padding: 2rem 1.5rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
         }
 
-        .login-card {
+        .login-card-premium {
             background: white;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 4rem;
             width: 100%;
-            max-width: 450px;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
         }
 
-        .login-header {
+        .login-card-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--alibaba-orange), #ff8c00);
+        }
+
+        .login-header-premium {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 3.5rem;
         }
 
-        .login-logo {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            width: 80px;
-            height: 80px;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .login-logo i {
+        .auth-logo-premium {
             font-size: 2.5rem;
-            color: white;
-        }
-
-        .login-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #1f2937;
-            margin-bottom: 0.5rem;
-        }
-
-        .login-subtitle {
-            color: #6b7280;
-            font-size: 1rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
-            display: block;
-            font-weight: 600;
-            color: #374151;
-            margin-bottom: 0.5rem;
-            font-size: 0.875rem;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 0.875rem 1rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .form-input:focus {
-            outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        .form-checkbox {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .form-checkbox input {
-            width: 18px;
-            height: 18px;
-            border-radius: 0.25rem;
-        }
-
-        .form-checkbox label {
-            color: #6b7280;
-            font-size: 0.875rem;
-        }
-
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 1rem;
-            border: none;
-            border-radius: 0.75rem;
-            font-weight: 600;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 900;
+            color: var(--alibaba-orange);
+            letter-spacing: -0.05em;
             margin-bottom: 1rem;
+            display: inline-block;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        .login-title-premium {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
         }
 
-        .forgot-password {
-            text-align: right;
-            margin-bottom: 1.5rem;
-        }
-
-        .forgot-password a {
-            color: #667eea;
-            text-decoration: none;
-            font-size: 0.875rem;
+        .login-subtitle-premium {
+            color: #6b7280;
+            font-size: 0.9375rem;
             font-weight: 500;
         }
 
-        .forgot-password a:hover {
-            text-decoration: underline;
+        .form-label-premium {
+            display: block;
+            font-weight: 700;
+            color: #374151;
+            margin-bottom: 0.75rem;
+            font-size: 0.8125rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .divider {
+        .form-input-premium {
+            width: 100%;
+            padding: 1.125rem 1.25rem;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            background: #f9fafb;
+            font-weight: 500;
+        }
+
+        .form-input-premium:focus {
+            outline: none;
+            border-color: var(--alibaba-orange);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255, 80, 0, 0.08);
+        }
+
+        .btn-auth-premium {
+            width: 100%;
+            background: var(--alibaba-orange);
+            color: white;
+            padding: 1.125rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1.125rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 10px 20px rgba(255, 80, 0, 0.2);
             display: flex;
             align-items: center;
-            margin: 2rem 0;
-            color: #9ca3af;
-            font-size: 0.875rem;
+            justify-content: center;
+            gap: 12px;
         }
 
-        .divider::before,
-        .divider::after {
+        .btn-auth-premium:hover {
+            transform: translateY(-3px);
+            background: var(--alibaba-orange-hover);
+            box-shadow: 0 15px 30px rgba(255, 80, 0, 0.3);
+        }
+
+        .forgot-link-premium {
+            display: block;
+            text-align: right;
+            color: #6b7280;
+            text-decoration: none;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            margin-top: -1rem;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .forgot-link-premium:hover {
+            color: var(--alibaba-orange);
+        }
+
+        .divider-premium {
+            display: flex;
+            align-items: center;
+            margin: 2.5rem 0;
+            color: #9ca3af;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .divider-premium::before,
+        .divider-premium::after {
             content: '';
             flex: 1;
             height: 1px;
-            background: #e5e7eb;
+            background: #f3f4f6;
         }
 
-        .divider span {
-            padding: 0 1rem;
+        .divider-premium span {
+            padding: 0 1.25rem;
         }
 
-        .social-login {
+        .social-grid-premium {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-            margin-bottom: 2rem;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
         }
 
-        .social-btn {
+        .social-tab-premium {
             padding: 0.875rem;
-            border: 2px solid #e5e7eb;
-            border-radius: 0.75rem;
+            border: 2px solid #f3f4f6;
+            border-radius: 12px;
             background: white;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -170,178 +177,146 @@
             align-items: center;
             justify-content: center;
             text-decoration: none;
-            color: #6b7280;
+            color: #374151;
+            font-size: 1.25rem;
         }
 
-        .social-btn:hover {
-            border-color: #667eea;
-            background: #f9fafb;
+        .social-tab-premium:hover {
+            border-color: var(--alibaba-orange);
+            color: var(--alibaba-orange);
+            background: #fff7f2;
             transform: translateY(-2px);
         }
 
-        .social-btn i {
-            font-size: 1.5rem;
-        }
-
-        .social-btn.google:hover {
-            border-color: #ea4335;
-            color: #ea4335;
-        }
-
-        .social-btn.discord:hover {
-            border-color: #5865f2;
-            color: #5865f2;
-        }
-
-        .social-btn.github:hover {
-            border-color: #333;
-            color: #333;
-        }
-
-        .register-link {
+        .footer-auth-premium {
             text-align: center;
             color: #6b7280;
-            font-size: 0.875rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
         }
 
-        .register-link a {
-            color: #667eea;
-            font-weight: 600;
+        .footer-auth-premium a {
+            color: var(--alibaba-orange);
+            font-weight: 800;
             text-decoration: none;
+            margin-left: 0.25rem;
         }
 
-        .register-link a:hover {
+        .footer-auth-premium a:hover {
             text-decoration: underline;
         }
 
-        .alert {
-            padding: 1rem;
-            border-radius: 0.75rem;
-            margin-bottom: 1.5rem;
+        .alert-premium {
+            padding: 1.25rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
             font-size: 0.875rem;
+            font-weight: 600;
+            border-left: 4px solid;
         }
 
-        .alert-success {
-            background: #d1fae5;
+        .alert-premium-success {
+            background: #ecfdf5;
             color: #065f46;
-            border: 1px solid #10b981;
-        }
-
-        .alert-error {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #ef4444;
+            border-color: #10b981;
         }
 
         @media (max-width: 640px) {
-            .login-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .login-title {
-                font-size: 1.5rem;
+            .login-card-premium {
+                padding: 3rem 1.5rem;
             }
         }
     </style>
 
     <div class="login-container">
-        <div class="login-card">
+        <div class="login-card-premium">
             <!-- Header -->
-            <div class="login-header">
-                <div class="login-logo">
-                    <i class="fas fa-shopping-bag"></i>
-                </div>
-                <h1 class="login-title">Welcome Back!</h1>
-                <p class="login-subtitle">Login to continue shopping</p>
+            <div class="login-header-premium">
+                <div class="auth-logo-premium">GrosirKu.</div>
+                <h1 class="login-title-premium">Selamat Datang Kembali</h1>
+                <p class="login-subtitle-premium">Masuk ke terminal sourcing Anda</p>
             </div>
 
             <!-- Session Status -->
-            <x-auth-session-status class="alert alert-success" :status="session('status')" />
+            @if (session('status'))
+                <div class="alert-premium alert-premium-success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <!-- Login Form -->
             <form method="POST" action="{{ route('login') }}">
                 @csrf
 
                 <!-- Email -->
-                <div class="form-group">
-                    <label for="email" class="form-label">
-                        <i class="fas fa-envelope"></i> Email Address
-                    </label>
+                <div class="mb-6">
+                    <label for="email" class="form-label-premium">Alamat Email Bisnis</label>
                     <input id="email" 
-                           class="form-input" 
+                           class="form-input-premium" 
                            type="email" 
                            name="email" 
                            value="{{ old('email') }}" 
                            required 
                            autofocus 
                            autocomplete="username"
-                           placeholder="your@email.com">
+                           placeholder="nama@perusahaan.com">
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <!-- Password -->
-                <div class="form-group">
-                    <label for="password" class="form-label">
-                        <i class="fas fa-lock"></i> Password
-                    </label>
+                <div class="mb-4">
+                    <label for="password" class="form-label-premium">Kata Sandi</label>
                     <input id="password" 
-                           class="form-input" 
+                           class="form-input-premium" 
                            type="password" 
                            name="password" 
                            required 
                            autocomplete="current-password"
-                           placeholder="Enter your password">
+                           placeholder="Min. 8 karakter">
                     <x-input-error :messages="$errors->get('password')" class="mt-2" />
-                </div>
-
-                <!-- Remember Me -->
-                <div class="form-checkbox">
-                    <input id="remember_me" type="checkbox" name="remember">
-                    <label for="remember_me">Remember me</label>
                 </div>
 
                 <!-- Forgot Password -->
                 @if (Route::has('password.request'))
-                <div class="forgot-password">
-                    <a href="{{ route('password.request') }}">
-                        Forgot your password?
+                    <a href="{{ route('password.request') }}" class="forgot-link-premium">
+                        Lupa kata sandi?
                     </a>
-                </div>
                 @endif
 
+                <!-- Remember Me -->
+                <div class="flex items-center mb-8">
+                    <input id="remember_me" type="checkbox" name="remember" class="w-4 h-4 text-orange-600 border-gray-300 rounded focus:ring-orange-500">
+                    <label for="remember_me" class="ml-2 text-sm font-bold text-gray-500">Ingat Akun Saya</label>
+                </div>
+
                 <!-- Login Button -->
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-sign-in-alt"></i> Log In
+                <button type="submit" class="btn-auth-premium">
+                    <i class="fas fa-sign-in-alt"></i> Masuk Sekarang
                 </button>
             </form>
 
             <!-- Divider -->
-            <div class="divider">
-                <span>Or continue with</span>
+            <div class="divider-premium">
+                <span>Atau Masuk Melalui</span>
             </div>
 
-            <!-- Social Login Buttons -->
-            <div class="social-login">
-                <!-- Google Login -->
-                <a href="{{ route('social.redirect', 'google') }}" class="social-btn google" title="Login with Google">
-                    <i class="fab fa-google"></i>
+            <!-- Social Login Grid -->
+            <div class="social-grid-premium">
+                <a href="{{ route('social.redirect', 'google') }}" class="social-tab-premium" title="Google">
+                    <i class="fab fa-google text-[#ea4335]"></i>
                 </a>
-
-                <!-- Discord Login -->
-                <a href="{{ route('social.redirect', 'discord') }}" class="social-btn discord" title="Login with Discord">
-                    <i class="fab fa-discord"></i>
+                <a href="{{ route('social.redirect', 'discord') }}" class="social-tab-premium" title="Discord">
+                    <i class="fab fa-discord text-[#5865f2]"></i>
                 </a>
-
-                <!-- GitHub Login -->
-                <a href="{{ route('social.redirect', 'github') }}" class="social-btn github" title="Login with GitHub">
-                    <i class="fab fa-github"></i>
+                <a href="{{ route('social.redirect', 'github') }}" class="social-tab-premium" title="GitHub">
+                    <i class="fab fa-github text-[#181717]"></i>
                 </a>
             </div>
 
             <!-- Register Link -->
-            <div class="register-link">
-                Don't have an account? 
-                <a href="{{ route('register') }}">Register now</a>
+            <div class="footer-auth-premium">
+                Belum punya akun sourcing? 
+                <a href="{{ route('register') }}">Daftar Gratis</a>
             </div>
         </div>
     </div>

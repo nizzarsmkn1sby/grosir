@@ -1,172 +1,176 @@
 @extends('layouts.public')
 
-@section('title', 'Checkout - GrosirKu')
+@section('title', 'Terminal Checkout - Secure Protocol')
 
 @push('styles')
 <style>
-    .checkout-page {
-        padding: 4rem 0;
+    /* Premium Checkout Terminal Styles */
+    .checkout-terminal-wrapper {
+        font-family: 'Plus Jakarta Sans', sans-serif;
         background: #f8fafc;
         min-height: 100vh;
+        padding-bottom: 10rem;
     }
 
-    .checkout-grid {
-        display: grid;
-        grid-template-columns: 1fr 400px;
-        gap: 2.5rem;
-        align-items: start;
-    }
-
-    .checkout-card {
-        background: white;
-        border-radius: 1.5rem;
-        padding: 2.5rem;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
-        border: 1px solid #f1f5f9;
-        margin-bottom: 2rem;
-    }
-
-    .checkout-card h2 {
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #1e293b;
-        margin-bottom: 2rem;
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-    }
-
-    .form-group {
-        margin-bottom: 1.5rem;
-    }
-
-    .form-label {
-        display: block;
-        font-weight: 600;
-        color: #475569;
-        margin-bottom: 0.5rem;
-    }
-
-    .form-input {
-        width: 100%;
-        padding: 0.75rem 1rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 0.75rem;
-        transition: all 0.2s;
-        font-family: inherit;
-    }
-
-    .form-input:focus {
-        border-color: #6366f1;
-        outline: none;
-        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
-    }
-
-    .payment-methods {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-        gap: 1rem;
-    }
-
-    .payment-option {
+    .checkout-header-terminal {
+        background: #0f172a;
+        padding: 4rem 0;
+        margin-bottom: 5rem;
         position: relative;
+        overflow: hidden;
     }
 
-    .payment-option input {
+    .checkout-header-terminal::after {
+        content: '';
         position: absolute;
-        opacity: 0;
-        width: 0;
-        height: 0;
-    }
-
-    .payment-label {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 1.25rem;
-        border: 2px solid #e2e8f0;
-        border-radius: 1rem;
-        cursor: pointer;
-        transition: all 0.2s;
-    }
-
-    .payment-option input:checked + .payment-label {
-        border-color: #6366f1;
-        background: rgba(99, 102, 241, 0.05);
-        color: #6366f1;
-    }
-
-    .payment-label i {
-        font-size: 1.5rem;
-    }
-
-    /* Order Summary Sidebar */
-    .summary-sidebar {
-        background: white;
-        border-radius: 2rem;
-        padding: 2rem;
-        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
-        border: 1px solid #f1f5f9;
-        position: sticky;
-        top: 100px;
-    }
-
-    .sidebar-item {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        color: #64748b;
-    }
-
-    .sidebar-total {
-        display: flex;
-        justify-content: space-between;
-        font-size: 1.5rem;
-        font-weight: 800;
-        color: #1e293b;
-        margin-top: 1rem;
-        padding-top: 1rem;
-        border-top: 2px solid #f1f5f9;
-    }
-
-    .btn-complete {
+        bottom: 0;
+        left: 0;
         width: 100%;
-        background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-        color: white;
-        padding: 1.25rem;
-        border: none;
-        border-radius: 1.25rem;
-        font-size: 1.125rem;
-        font-weight: 700;
-        cursor: pointer;
-        margin-top: 2rem;
-        transition: all 0.3s;
-        box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.3);
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 80, 0, 0.3), transparent);
     }
 
-    .btn-complete:hover {
-        transform: scale(1.02);
-        box-shadow: 0 20px 25px -5px rgba(99, 102, 241, 0.4);
+    .terminal-step-card {
+        background: white;
+        border-radius: 40px;
+        padding: 4rem;
+        border: 1px solid #f1f5f9;
+        box-shadow: var(--shadow-premium);
+        margin-bottom: 3rem;
+    }
+
+    .step-indicator-terminal {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        margin-bottom: 3.5rem;
+    }
+
+    .step-badge-terminal {
+        width: 40px;
+        height: 40px;
+        background: var(--alibaba-orange);
+        color: white;
+        border-radius: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 900;
+        font-size: 0.875rem;
+        box-shadow: 0 10px 20px rgba(255, 80, 0, 0.2);
+    }
+
+    .step-title-terminal {
+        font-size: 1.5rem;
+        font-weight: 900;
+        color: #0f172a;
+        letter-spacing: -0.03em;
+    }
+
+    .terminal-label {
+        font-[10px];
+        font-weight: 800;
+        color: #64748b;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin-bottom: 1rem;
+        display: block;
+    }
+
+    .terminal-input {
+        width: 100%;
+        background: #f8fafc;
+        border: 2px solid #f1f5f9;
+        border-radius: 20px;
+        padding: 1.25rem 1.5rem;
+        font-weight: 700;
+        color: #0f172a;
+        transition: all 0.3s;
+    }
+
+    .terminal-input:focus {
+        border-color: var(--alibaba-orange);
+        background: white;
+        outline: none;
+        box-shadow: 0 0 0 5px rgba(255, 80, 0, 0.05);
+    }
+
+    .payment-module-terminal {
+        background: #0f172a;
+        border-radius: 32px;
+        padding: 3rem;
+        color: white;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .payment-grid-terminal {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+        gap: 1rem;
+        margin-top: 2.5rem;
+    }
+
+    .payment-option-terminal {
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 1.5rem;
+        border-radius: 20px;
+        text-align: center;
+        transition: all 0.3s;
+    }
+
+    .payment-option-terminal i {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--alibaba-orange);
+    }
+
+    .payment-option-terminal span {
+        display: block;
+        font-size: 10px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: #94a3b8;
+    }
+
+    .checkout-sidebar-dark {
+        background: #0f172a;
+        border-radius: 40px;
+        padding: 3rem;
+        color: white;
+        position: sticky;
+        top: 140px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        box-shadow: 0 30px 60px rgba(0,0,0,0.2);
+    }
+
+    .btn-checkout-primary {
+        @extend .btn-terminal-primary;
+        width: 100%;
+        margin-top: 3rem;
     }
 
     @media (max-width: 1024px) {
-        .checkout-grid {
-            grid-template-columns: 1fr;
-        }
-        .summary-sidebar {
-            position: static;
-        }
+        .checkout-sidebar-dark { position: static; }
+        .terminal-step-card { padding: 2.5rem; }
     }
 </style>
 @endpush
 
 @section('content')
-<div class="checkout-page">
-    <div class="container mx-auto px-4">
-        <h1 class="text-3xl font-extrabold mb-8 text-slate-800">Complete Your Order</h1>
+<div class="checkout-terminal-wrapper">
+    <!-- Header -->
+    <div class="checkout-header-terminal">
+        <div class="container mx-auto px-8">
+            <div class="text-[10px] font-black text-orange-500 uppercase tracking-[0.3em] mb-4">Transaction Protocol v.1.20</div>
+            <h1 class="text-4xl font-black text-white tracking-tight">Secure Checkout Interface</h1>
+        </div>
+    </div>
 
-        {{-- Cart Error Detection & Fix --}}
+    <div class="container mx-auto px-8">
+        {{-- Protocol Error Handling --}}
         @php
             $hasError = false;
             foreach($cart as $item) {
@@ -178,192 +182,159 @@
         @endphp
 
         @if($hasError)
-        <div class="bg-red-50 border-l-4 border-red-500 p-6 mb-8 rounded-lg">
-            <div class="flex items-start">
-                <i class="fas fa-exclamation-circle text-red-500 text-2xl mr-4 mt-1"></i>
-                <div class="flex-1">
-                    <h3 class="text-lg font-bold text-red-800 mb-2">Keranjang Bermasalah Terdeteksi</h3>
-                    <p class="text-red-700 mb-4">
-                        Data keranjang Anda mengalami masalah teknis. Silakan reset keranjang dan tambahkan produk kembali.
-                    </p>
-                    <form action="{{ route('cart.force-clear') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg transition-all">
-                            <i class="fas fa-sync-alt mr-2"></i> Reset Keranjang Sekarang
-                        </button>
-                    </form>
-                </div>
+        <div class="bg-red-500/5 border border-red-500/10 p-10 rounded-[40px] mb-12 flex items-center gap-10">
+            <div class="w-20 h-20 bg-red-500 rounded-3xl flex items-center justify-center text-white text-3xl shadow-lg shadow-red-500/20">
+                <i class="fas fa-shield-virus"></i>
             </div>
-        </div>
-        @endif
-
-        {{-- Pending Orders Warning --}}
-        @if(isset($pendingOrders) && $pendingOrders->isNotEmpty())
-        <div class="bg-amber-50 border-l-4 border-amber-500 p-6 mb-8 rounded-lg shadow-sm">
-            <div class="flex items-start">
-                <i class="fas fa-exclamation-triangle text-amber-500 text-2xl mr-4 mt-1"></i>
-                <div class="flex-1">
-                    <h3 class="text-lg font-bold text-amber-800 mb-2">⚠️ Pending Order Detected</h3>
-                    <p class="text-amber-700 mb-4">
-                        You have existing orders with some of these products that are still being processed:
-                    </p>
-                    
-                    @foreach($pendingOrders as $order)
-                    <div class="bg-white rounded-lg p-4 mb-3 border border-amber-200">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="font-bold text-slate-800">Order #{{ str_pad($order->id, 5, '0', STR_PAD_LEFT) }}</span>
-                            <span class="px-3 py-1 rounded-full text-xs font-bold uppercase
-                                @if($order->status == 'pending') bg-amber-100 text-amber-700
-                                @else bg-blue-100 text-blue-700 @endif">
-                                {{ $order->status }}
-                            </span>
-                        </div>
-                        <div class="text-sm text-slate-600">
-                            <i class="far fa-clock mr-1"></i>
-                            {{ $order->created_at->diffForHumans() }}
-                        </div>
-                        <div class="mt-2 flex flex-wrap gap-2">
-                            @foreach($order->orderItems as $item)
-                            <span class="bg-amber-50 text-amber-700 px-2 py-1 rounded text-xs font-semibold">
-                                {{ $item->product->name }} (×{{ $item->quantity }})
-                            </span>
-                            @endforeach
-                        </div>
-                    </div>
-                    @endforeach
-
-                    <div class="mt-4 p-3 bg-amber-100 rounded-lg">
-                        <p class="text-sm text-amber-800">
-                            <i class="fas fa-info-circle mr-1"></i>
-                            <strong>Note:</strong> If you proceed with this checkout, you may have duplicate orders. 
-                            Please complete or cancel your pending orders first, or remove duplicate items from your cart.
-                        </p>
-                    </div>
-                </div>
+            <div class="flex-1">
+                <h3 class="text-xl font-black text-slate-900 mb-2">Protocol Desynchronization</h3>
+                <p class="text-slate-500 font-bold text-sm mb-6">Critical data mismatch detected in current manifest. Please reset protocol environment to proceed.</p>
+                <form action="{{ route('cart.force-clear') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="bg-slate-900 text-white font-black py-4 px-10 rounded-full text-[10px] uppercase tracking-widest hover:bg-orange-500 transition-all">
+                        Reset Environment
+                    </button>
+                </form>
             </div>
         </div>
         @endif
 
         <form action="{{ route('checkout.process') }}" method="POST">
             @csrf
-            <div class="checkout-grid">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
                 
-                <div class="checkout-main">
-                    
-                    <!-- Shipping Section -->
-                    <div class="checkout-card">
-                        <h2><i class="fas fa-truck text-indigo-500"></i> Shipping Address</h2>
+                <div class="lg:col-span-8">
+                    <!-- Step 1: Logistics -->
+                    <div class="terminal-step-card">
+                        <div class="step-indicator-terminal">
+                            <div class="step-badge-terminal">01</div>
+                            <div class="step-title-terminal">Logistics Data Entry</div>
+                        </div>
                         
-                        <div class="form-group">
-                            <label class="form-label">Full Address</label>
-                            <textarea name="address" class="form-input" rows="3" placeholder="Street name, building number, district..." required>{{ old('address') }}</textarea>
-                            @error('address') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                        <div class="mb-10">
+                            <label class="terminal-label">Primary Destination Address</label>
+                            <textarea name="address" class="terminal-input" rows="4" placeholder="Detailed logistics drop-off point..." required>{{ old('address') }}</textarea>
+                            @error('address') <p class="text-red-500 text-[10px] mt-2 font-black uppercase">{{ $message }}</p> @enderror
                         </div>
 
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="form-group">
-                                <label class="form-label">City</label>
-                                <input type="text" name="city" class="form-input" placeholder="e.g. Jakarta Selatan" value="{{ old('city') }}" required>
-                                @error('city') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                            <div>
+                                <label class="terminal-label">Operational City</label>
+                                <input type="text" name="city" class="terminal-input" placeholder="City hub..." value="{{ old('city') }}" required>
+                                @error('city') <p class="text-red-500 text-[10px] mt-2 font-black uppercase">{{ $message }}</p> @enderror
                             </div>
-                            <div class="form-group">
-                                <label class="form-label">Province</label>
-                                <input type="text" name="province" class="form-input" placeholder="e.g. DKI Jakarta" value="{{ old('province') }}" required>
-                                @error('province') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                            <div>
+                                <label class="terminal-label">Regional Province</label>
+                                <input type="text" name="province" class="terminal-input" placeholder="Province..." value="{{ old('province') }}" required>
+                                @error('province') <p class="text-red-500 text-[10px] mt-2 font-black uppercase">{{ $message }}</p> @enderror
                             </div>
                         </div>
 
-                        <div class="form-group">
-                            <label class="form-label">Postal Code</label>
-                            <input type="text" name="postal_code" class="form-input" placeholder="12345" value="{{ old('postal_code') }}" required>
-                            @error('postal_code') <p class="text-red-500 text-sm mt-1">{{ $message }}</p> @enderror
+                        <div class="w-full md:w-1/2">
+                            <label class="terminal-label">Zone Code (Postal)</label>
+                            <input type="text" name="postal_code" class="terminal-input" placeholder="00000" value="{{ old('postal_code') }}" required>
+                            @error('postal_code') <p class="text-red-500 text-[10px] mt-2 font-black uppercase">{{ $message }}</p> @enderror
                         </div>
                     </div>
 
-                    <!-- Payment Info Section -->
-                    <div class="checkout-card">
-                        <h2><i class="fas fa-shield-alt text-indigo-500"></i> Secure Payment</h2>
+                    <!-- Step 2: Payment Protocol -->
+                    <div class="terminal-step-card">
+                        <div class="step-indicator-terminal">
+                            <div class="step-badge-terminal">02</div>
+                            <div class="step-title-terminal">Escrow Settlement Protocol</div>
+                        </div>
                         
-                        <div class="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl p-6 border-2 border-indigo-100">
-                            <div class="flex items-start gap-4 mb-4">
-                                <div class="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-sm">
-                                    <i class="fas fa-lock text-2xl text-indigo-600"></i>
+                        <div class="payment-module-terminal">
+                            <div class="flex items-center gap-6 mb-10">
+                                <div class="w-20 h-20 bg-white/5 rounded-3xl flex items-center justify-center text-3xl shadow-inner border border-white/5">
+                                    <i class="fas fa-fingerprint text-orange-500"></i>
                                 </div>
-                                <div class="flex-1">
-                                    <h3 class="font-bold text-lg text-slate-800 mb-1">Payment via Midtrans</h3>
-                                    <p class="text-sm text-slate-600">
-                                        Secure payment gateway with multiple payment options
-                                    </p>
+                                <div>
+                                    <h3 class="text-xl font-black text-white">Encrypted Gateway Active</h3>
+                                    <p class="text-slate-400 font-bold text-sm">Automated settlement via Midtrans Secure Node</p>
                                 </div>
                             </div>
 
-                            <div class="bg-white rounded-xl p-4 mb-4">
-                                <p class="text-xs text-slate-500 uppercase font-bold tracking-wider mb-3">Available Payment Methods:</p>
-                                <div class="grid grid-cols-2 gap-3">
-                                    <div class="flex items-center gap-2 text-sm text-slate-700">
-                                        <i class="fas fa-university text-indigo-500"></i>
-                                        <span>Bank Transfer</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-slate-700">
-                                        <i class="fas fa-credit-card text-indigo-500"></i>
-                                        <span>Credit/Debit Card</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-slate-700">
-                                        <i class="fas fa-wallet text-indigo-500"></i>
-                                        <span>E-Wallet (GoPay, OVO)</span>
-                                    </div>
-                                    <div class="flex items-center gap-2 text-sm text-slate-700">
-                                        <i class="fas fa-store text-indigo-500"></i>
-                                        <span>Retail Stores</span>
-                                    </div>
+                            <div class="payment-grid-terminal">
+                                <div class="payment-option-terminal">
+                                    <i class="fas fa-university"></i>
+                                    <span>Bank Transfer</span>
+                                </div>
+                                <div class="payment-option-terminal">
+                                    <i class="fas fa-credit-card"></i>
+                                    <span>Cards</span>
+                                </div>
+                                <div class="payment-option-terminal">
+                                    <i class="fas fa-wallet"></i>
+                                    <span>E-Wallet</span>
+                                </div>
+                                <div class="payment-option-terminal">
+                                    <i class="fas fa-store"></i>
+                                    <span>OTC Hubs</span>
                                 </div>
                             </div>
 
-                            <div class="flex items-center gap-2 text-sm text-slate-600">
-                                <i class="fas fa-info-circle text-indigo-500"></i>
-                                <span>You'll choose your preferred payment method in the next step</span>
+                            <div class="mt-10 flex items-center gap-4 text-[10px] font-black text-slate-500 uppercase tracking-widest bg-white/5 p-6 rounded-2xl">
+                                <i class="fas fa-info-circle text-orange-500 text-sm"></i>
+                                Multiple gateway nodes will be available for final selection in the next stage.
                             </div>
                         </div>
-
-                        <!-- Hidden input for backend compatibility -->
                         <input type="hidden" name="payment_method" value="midtrans">
                     </div>
                 </div>
 
-                <!-- Order Summary Sidebar -->
-                <div class="summary-sidebar">
-                    <h3 class="text-xl font-extrabold mb-6 text-slate-800">Order Summary</h3>
-                    
-                    @foreach($cart as $item)
-                    <div class="flex justify-between text-sm mb-3">
-                        <span class="text-slate-600">{{ $item['name'] ?? 'Produk' }} (x{{ $item['quantity'] ?? 0 }})</span>
-                        <span class="font-bold">Rp {{ number_format(($item['price'] ?? 0) * ($item['quantity'] ?? 0), 0, ',', '.') }}</span>
-                    </div>
-                    @endforeach
+                <!-- Sidebar: Summary Terminal -->
+                <div class="lg:col-span-4">
+                    <div class="checkout-sidebar-dark">
+                        <h3 class="text-xl font-black mb-10 pb-6 border-b border-white/10 uppercase tracking-widest">Manifest Review</h3>
+                        
+                        <div class="space-y-6 mb-10 max-h-[400px] overflow-y-auto pr-4 custom-scrollbar">
+                            @foreach($cart as $item)
+                            <div class="flex justify-between items-start gap-4">
+                                <div class="flex-1">
+                                    <div class="text-[11px] font-black text-white leading-tight mb-1">{{ $item['name'] ?? 'Undefined Resource' }}</div>
+                                    <div class="text-[9px] font-black text-slate-500 uppercase tracking-widest">BATCH SIZE: {{ $item['quantity'] ?? 0 }}</div>
+                                </div>
+                                <div class="text-[11px] font-black text-orange-500">
+                                    IDR {{ number_format(($item['price'] ?? 0) * ($item['quantity'] ?? 0), 0, ',', '.') }}
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
 
-                    <div class="h-px bg-slate-100 my-4"></div>
+                        <div class="pt-8 border-t border-white/10 space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Gross Valuation</span>
+                                <span class="text-sm font-bold">IDR {{ number_format($subtotal, 0, ',', '.') }}</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Logistics Fee</span>
+                                <span class="text-[10px] font-black text-green-500 uppercase bg-green-500/10 px-3 py-1 rounded-full">Automated</span>
+                            </div>
+                        </div>
+                        
+                        <div class="my-10 border-t border-dashed border-white/10"></div>
+                        
+                        <div class="space-y-1 mb-10">
+                            <div class="text-[10px] font-black text-orange-500 uppercase tracking-[0.2em]">Net Capital Total</div>
+                            <div class="text-3xl font-black">IDR {{ number_format($total, 0, ',', '.') }}</div>
+                        </div>
 
-                    <div class="sidebar-item">
-                        <span>Subtotal</span>
-                        <span class="font-bold">Rp {{ number_format($subtotal, 0, ',', '.') }}</span>
+                        <button type="submit" class="btn-terminal-primary w-full mt-10">
+                            <i class="fas fa-bolt"></i>
+                            Execute Settlement
+                        </button>
+                        
+                        <div class="mt-12 text-center">
+                            <div class="flex items-center justify-center gap-3 text-[9px] font-black text-slate-500 uppercase tracking-widest mb-4">
+                                <i class="fas fa-shield-alt text-orange-500"></i>
+                                Ecosystem Trust Protocol Active
+                            </div>
+                            <p class="text-[9px] text-slate-500 font-bold leading-relaxed">
+                                Execution of this protocol constitutes formal acceptance of the Wholesale Terminal v.1.0 Service Agreements.
+                            </p>
+                        </div>
                     </div>
-                    <div class="sidebar-item">
-                        <span>Shipping</span>
-                        <span class="text-green-500 font-bold">FREE</span>
-                    </div>
-                    
-                    <div class="sidebar-total">
-                        <span>Total</span>
-                        <span>Rp {{ number_format($total, 0, ',', '.') }}</span>
-                    </div>
-
-                    <button type="submit" class="btn-complete">
-                        Place Order Now
-                    </button>
-                    
-                    <p class="text-slate-400 text-xs text-center mt-6">
-                        By placing an order, you agree to our Terms & Conditions.
-                    </p>
                 </div>
 
             </div>
