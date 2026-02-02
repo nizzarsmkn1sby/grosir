@@ -1,0 +1,97 @@
+﻿# GrosirKu - Premium Wholesale & Top-Up Terminal v.1.0
+
+GrosirKu adalah platform e-commerce enterprise-grade yang dirancang untuk ekosistem pengadaan profesional (sourcing) dan layanan top-up. Proyek ini mengedepankan estetika premium dengan integrasi sistem pembayaran otomatis.
+
+## 🚀 Fitur Utama
+
+- **Premium Design System**: Menggunakan estetika modern dengan nuansa dark mode, glassmorphism, dan alur kerja terminal profesional.
+- **Wholesale Workflow**: Dirancang khusus untuk kebutuhan grosir dengan manajemen stok yang ketat.
+- **Integrasi Midtrans**: Sistem pembayaran otomatis menggunakan Snap Midtrans dengan verifikasi signature keamanan tingkat tinggi.
+- **Automated Stock Management**: Stok produk berkurang secara otomatis segera setelah pembayaran berhasil diverifikasi oleh sistem.
+- **Social Login**: Autentikasi cepat menggunakan Discord dan provider lainnya melalui Laravel Socialite.
+- **Bypass Development**: Fitur khusus untuk mempermudah testing pembayaran di lingkungan local tanpa perlu setup webhook tunnel (seperti Ngrok/Localtunnel).
+
+## 🛠️ Tech Stack
+
+- **Backend**: Laravel 12 (PHP 8.2+)
+- **Frontend**: Vite, Tailwind CSS v4, Alpine.js
+- **Database**: SQLite (Default development), MySQL (Production ready)
+- **Payment**: Midtrans PHP SDK v2.6
+- **Auth**: Laravel Breeze & Laravel Socialite
+
+## 📋 Persyaratan Sistem
+
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- SQLite3 (atau database pilihan lainnya)
+
+## ⚙️ Panduan Instalasi
+
+1. **Clone & Setup Folder**
+   ```bash
+   git clone [url-repo]
+   cd grosir
+   ```
+
+2. **Instal Dependensi**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Konfigurasi Environment**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   *Edit `.env` dan lengkapi bagian Midtrans & Socialite:*
+   ```env
+   MIDTRANS_SERVER_KEY=your_key
+   MIDTRANS_CLIENT_KEY=your_key
+   MIDTRANS_IS_PRODUCTION=false
+
+   DISCORD_CLIENT_ID=your_id
+   DISCORD_CLIENT_SECRET=your_secret
+   DISCORD_REDIRECT_URI="${APP_URL}/auth/discord/callback"
+   ```
+
+4. **Migrasi & Seeding**
+   Proyek ini memiliki database seeder yang sangat lengkap (Kategori, Produk Game, Produk Sourcing).
+   ```bash
+   php artisan migrate:fresh --seed
+   ```
+
+5. **Jalankan Aplikasi**
+   ```bash
+   npm run dev
+   ```
+
+## 🧪 Tips Development
+
+### Manual Payment Trigger (Bypass Webhook)
+Karena Midtrans tidak bisa mengirim notifikasi webhook ke `localhost` secara langsung, gunakan route development ini untuk mensimulasikan pembayaran sukses:
+
+```
+GET /dev/complete-payment/{orderId}
+```
+*Syarat: `APP_ENV=local` di file `.env`.*
+
+### Log Notifikasi
+Semua aktivitas pembayaran dan error signature akan terekam di `storage/logs/laravel.log`. Cek file ini jika ada masalah dengan integrasi Midtrans.
+
+## 📂 Struktur Penting
+
+- `app/Http/Controllers/Web`: Logika inti cart, checkout, dan product display.
+- `resources/views/layouts/public.blade.php`: Layout utama dengan desain premium sistem.
+- `database/seeders`: Seeders untuk data produk dan kategori awal.
+
+## 🎨 Tipografi & Estetika
+
+Kami menggunakan kombinasi font berikut untuk menjaga tampilan premium:
+- **Headings**: `font-family: 'Sora', sans-serif;` (disarankan) atau `Plus Jakarta Sans`.
+- **Body**: `font-family: 'Inter', sans-serif;` atau `Instrument Sans`.
+- **Primary Color**: `#FF5000` (Alibaba Orange).
+
+---
+*Developed with excellence for a seamless wholesale experience.*
